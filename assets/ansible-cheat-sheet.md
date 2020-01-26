@@ -1,5 +1,18 @@
 ## Common Ansible Commands
 
+### Inventory
+
+```
+ansible-config --graph
+```
+
+
+
+
+
+
+
+
 - `ansible all --list-hosts` -- list all hosts in hosts file
 
 - `ansible <group_name> --list-hosts`  --list hosts by group
