@@ -4,6 +4,22 @@
 
 ```
 ansible-config --graph
+
+ansible all --list-hosts -- list all hosts in hosts file
+ansible <group_name> --list-hosts  --list hosts by group
+```
+
+### Files & Folders
+
+```
+ansible <group_name> -m setup --tree ~/.ansible/tmp/facts -k -u <userid>` --write to file 
+```
+
+### Facts 
+
+```
+ansible <group_name> -i hosts -m setup -k -u <userid> --get facts 
+ansible <group_name> -m setup -a 'filter=*ipv4*' -k -u <userid>` --filter facts 
 ```
 
 
@@ -13,13 +29,6 @@ ansible-config --graph
 
 
 
-- `ansible all --list-hosts` -- list all hosts in hosts file
-
-- `ansible <group_name> --list-hosts`  --list hosts by group
-
-- `ansible <group_name> -i hosts -m setup -k -u <userid>` --get facts 
-- `ansible <group_name> -m setup -a 'filter=*ipv4*' -k -u <userid>` --filter facts 
-- `ansible <group_name> -m setup --tree ~/.ansible/tmp/facts -k -u <userid>` --write to file 
 
 ```bash
 sudo ansible nodeweb -i hosts -m setup -k  -u vagrant
