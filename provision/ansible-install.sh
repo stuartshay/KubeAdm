@@ -14,3 +14,5 @@ apt-add-repository -y ppa:ansible/ansible
 apt update -y
 apt install -y ansible
 
+pip install argcomplete
+activate-global-python-argcomplete
