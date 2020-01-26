@@ -1,0 +1,17 @@
+[ubuntu]
+ansible
+k8s-master
+node-1
+node-2
+
+[k8s]
+k8s-master
+node-1
+node-2
+
+[master]
+k8s-master
+
+[node]
+node-1
+node-2
