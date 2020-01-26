@@ -1,13 +1,51 @@
+
+
+## Prerequisites
+
+VirtualBox v6.0   
+https://www.virtualbox.org/  
+
+Vagrant 2.2.6   
+https://www.vagrantup.com/downloads.html  
+
+
+## Setup
+
+```
+cd ~/vagrant.d
+ ssh-keygen -l -f ~/.vagrant.d/insecure_private_key
+
+
+ssh-keygen -y -f ~/.vagrant.d/insecure_private_key > ~/.vagrant.d/vagrant.pub
+```
+
+
+
+
+
 ## Common Ansible Commands
+
+
+### Config
+
+```
+vagrant ssh-config
+ansible-config --version
+```
 
 ### Inventory
 
 ```
-ansible-config --graph
+ansible-inventory --graph
 
 ansible all --list-hosts -- list all hosts in hosts file
 ansible <group_name> --list-hosts  --list hosts by group
 ```
+
+
+
+
+
 
 ### Files & Folders
 
@@ -21,14 +59,6 @@ ansible <group_name> -m setup --tree ~/.ansible/tmp/facts -k -u <userid>` --writ
 ansible <group_name> -i hosts -m setup -k -u <userid> --get facts 
 ansible <group_name> -m setup -a 'filter=*ipv4*' -k -u <userid>` --filter facts 
 ```
-
-
-
-
-
-
-
-
 
 ```bash
 sudo ansible nodeweb -i hosts -m setup -k  -u vagrant
