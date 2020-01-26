@@ -13,7 +13,6 @@ Vagrant.configure("2") do |config|
         v.cpus = 2
     end
     
-    
     config.vm.define "ansible" do |ansible|
         ansible.vm.box = IMAGE_NAME
         ansible.vm.network "private_network", ip: "192.168.50.1"
@@ -23,17 +22,10 @@ Vagrant.configure("2") do |config|
         ansible.vm.synced_folder "inventory/", "/inventory"
         ansible.vm.synced_folder "playbooks/", "/playbooks"
 
-        ansible.ssh.forward_agent    = true
-        ansible.ssh.insert_key       = false
-        ansible.ssh.private_key_path =  ["~/.vagrant.d/insecure_private_key","~/.ssh/id_rsa"]
-       
-      #  ansible.vm.provision "shell" do |s|
-      #      ssh_pub_key = File.readlines("#{Dir.home}/.ssh/id_rsa.pub").first.strip
-      #      s.inline = <<-SHELL
-      #        echo #{ssh_pub_key} >> /home/vagrant/.ssh/authorized_keys
-      #      SHELL
-      #  end
-        
+     #   ansible.ssh.forward_agent    = true
+     #   ansible.ssh.insert_key       = false
+     #   ansible.ssh.private_key_path =  ["~/.vagrant.d/insecure_private_key","~/.ssh/id_rsa"]
+               
         ansible.vm.provision "shell" do |s|
             ssh_prv_key = ""
             ssh_pub_key = ""
@@ -62,9 +54,6 @@ Vagrant.configure("2") do |config|
           end
 
     end
-
-
-
 
     config.vm.define "k8s-master" do |master|
         master.vm.box = IMAGE_NAME
@@ -97,24 +86,6 @@ Vagrant.configure("2") do |config|
               exit 0
             SHELL
           end
-
-
-
-
-
-
-
-
-     #   master.ssh.insert_key = false
-     #   master.ssh.private_key_path = ['~/.vagrant.d/insecure_private_key', '~/.ssh/id_rsa'] 
-      ##  master.vm.provision "file", source: "~/.ssh/id_rsa.pub", destination: "~/.ssh/authorized_keys" 
-
-        #master.vm.provision "ansible" do |ansible|
-            #ansible.playbook = "kubernetes-setup/master-playbook.yml"
-            #ansible.extra_vars = {
-            #    node_ip: "192.168.50.10",
-            #}
-        #end
     end
 
     (1..N).each do |i|
@@ -123,45 +94,33 @@ Vagrant.configure("2") do |config|
           node.vm.network "private_network", ip: "192.168.50.#{i + 10}"
           node.vm.hostname = "node-#{i}"
             
-            ## node.ssh.insert_key = false
-          ## node.ssh.private_key_path = ['~/.vagrant.d/insecure_private_key', '~/.ssh/id_rsa'] 
-          #  node.vm.provision "file", source: "~/.ssh/id_rsa.pub", destination: "~/.ssh/authorized_keys" 
-
-            #node.vm.provision "ansible" do |ansible|
-            #    ansible.playbook = "kubernetes-setup/node-playbook.yml"
-            #    ansible.extra_vars = {
-            #        node_ip: "192.168.50.#{i + 10}",
-            #    }
-            #end
-
-            node.vm.provision "shell" do |s|
-                ssh_prv_key = ""
-                ssh_pub_key = ""
-                if File.file?("#{Dir.home}/.ssh/id_rsa")
-                  ssh_prv_key = File.read("#{Dir.home}/.ssh/id_rsa")
-                  ssh_pub_key = File.readlines("#{Dir.home}/.ssh/id_rsa.pub").first.strip
-                else
-                  puts "No SSH key found. You will need to remedy this before pushing to the repository."
-                end
-                s.inline = <<-SHELL
-                  if grep -sq "#{ssh_pub_key}" /home/vagrant/.ssh/authorized_keys; then
-                    echo "SSH keys already provisioned."
-                    exit 0;
-                  fi
-                  echo "SSH key provisioning."
-                  mkdir -p /home/vagrant/.ssh/
-                  touch /home/vagrant/.ssh/authorized_keys
-                  echo #{ssh_pub_key} >> /home/vagrant/.ssh/authorized_keys
-                  echo #{ssh_pub_key} > /home/vagrant/.ssh/id_rsa.pub
-                  chmod 644 /home/vagrant/.ssh/id_rsa.pub
-                  echo "#{ssh_prv_key}" > /home/vagrant/.ssh/id_rsa
-                  chmod 600 /home/vagrant/.ssh/id_rsa
-                  chown -R vagrant:vagrant /home/vagrant
-                  exit 0
-                SHELL
-              end
-
-
+          node.vm.provision "shell" do |s|
+            ssh_prv_key = ""
+            ssh_pub_key = ""
+            if File.file?("#{Dir.home}/.ssh/id_rsa")
+                ssh_prv_key = File.read("#{Dir.home}/.ssh/id_rsa")
+                ssh_pub_key = File.readlines("#{Dir.home}/.ssh/id_rsa.pub").first.strip
+            else
+                puts "No SSH key found. You will need to remedy this before pushing to the repository."
+            end
+            s.inline = <<-SHELL
+            
+            if grep -sq "#{ssh_pub_key}" /home/vagrant/.ssh/authorized_keys; then
+                echo "SSH keys already provisioned."
+                exit 0;
+            fi
+                echo "SSH key provisioning."
+                mkdir -p /home/vagrant/.ssh/
+                touch /home/vagrant/.ssh/authorized_keys
+                echo #{ssh_pub_key} >> /home/vagrant/.ssh/authorized_keys
+                echo #{ssh_pub_key} > /home/vagrant/.ssh/id_rsa.pub
+                chmod 644 /home/vagrant/.ssh/id_rsa.pub
+                echo "#{ssh_prv_key}" > /home/vagrant/.ssh/id_rsa
+                chmod 600 /home/vagrant/.ssh/id_rsa
+                chown -R vagrant:vagrant /home/vagrant
+                exit 0
+            SHELL
+            end
 
         end
     end
