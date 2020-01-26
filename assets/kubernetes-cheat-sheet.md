@@ -9,10 +9,6 @@ minikube start
 minikube delete
 ```
 
-
-
-
-
 ```
 kubectl cluster-info
 
@@ -30,13 +26,8 @@ kubectl exec - execute a command on a container in a pod
 kubectl exec -it $POD_NAME bash
 
 ```
-
 ### Kubeapps
 https://github.com/kubeapps/kubeapps/releases
-
-
-
-
 
 
 #### Deployment
@@ -51,13 +42,6 @@ kubectl proxy
 ```
 
 #### Services 
-
-
-
-
-
-
-
 
 
 ### Installation
@@ -96,11 +80,6 @@ rename to minikube-windows-amd64 => minikube.exe
 minikube version
 minikube start 
 ```
-
-
-
-
-
 ### Start 
 ```
 .\minikube.exe start 
@@ -121,4 +100,3 @@ kubectl describe service database
 
 ### Scale
 kubectl scale deployment database --replicas=2
-

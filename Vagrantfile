@@ -15,7 +15,7 @@ Vagrant.configure("2") do |config|
     
     config.vm.define "ansible" do |ansible|
         ansible.vm.box = IMAGE_NAME
-        ansible.vm.network "private_network", ip: "192.168.50.1"
+        ansible.vm.network "private_network", ip: "192.168.50.5"
         ansible.vm.hostname = "ansible"
         ansible.vm.provision  :shell, path: "provision/ansible-install.sh"
         ansible.vm.provision  :shell, inline: "cp /vagrant/ansible.cfg /etc/ansible/ansible.cfg"

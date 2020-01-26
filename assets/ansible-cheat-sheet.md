@@ -1,28 +1,4 @@
 
-
-## Prerequisites
-
-VirtualBox v6.0   
-https://www.virtualbox.org/  
-
-Vagrant 2.2.6   
-https://www.vagrantup.com/downloads.html  
-
-
-## Setup
-
-```
-cd ~/vagrant.d
- ssh-keygen -l -f ~/.vagrant.d/insecure_private_key
-
-
-ssh-keygen -y -f ~/.vagrant.d/insecure_private_key > ~/.vagrant.d/vagrant.pub
-```
-
-
-
-
-
 ## Common Ansible Commands
 
 
@@ -74,42 +50,10 @@ sudo ansible nodeweb -m setup --tree ~/.ansible/tmp/facts -k -u vagrant
 sudo ansible nodeweb -m file -a 'path=/etc/fstab' -k  -u vagrant
 sudo ansible nodeweb -m file -a 'path=/tmp/etc/ state=directory mode=1755 owner=root' -k -s -u vagrant
 ```
-
 ### Linux Ping
 
 - `ansible all -m ping -s -k -u vagrant`
 
-### Windows Ping
-
-
-## Playbooks
-
-sudo ansible-playbook webserver.yml
 
 
 
-## Links 
-https://github.com/iJackUA/awesome-vagrant
-
-http://neeleshgurjar.co.in/techidnyan/ansible-basics/
-
-http://neeleshgurjar.co.in/techidnyan/install-ansible-2-x-and-manage-windows-machines/
-
-
-
-
-## Tips
-http://www.virtualtothecore.com/en/configuring-windows-machines-for-ansible/
-
-https://www.gitbook.com/book/tumregels/ansible-tutorial/details     
-
-https://github.com/leucos/ansible-tuto/tree/master/step-00       
-
-https://serversforhackers.com/an-ansible-tutorial       
-
-
-http://ermaker.github.io/blog/2015/11/18/change-insecure-key-to-my-own-key-on-vagrant.html
-
-https://github.com/lowescott/learning-tools/tree/master/vagrant
-
-https://github.com/geerlingguy/packer-ubuntu-1604

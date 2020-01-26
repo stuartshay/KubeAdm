@@ -25,11 +25,12 @@ id_rsa.pub
 
 ```
 vagrant up
+
+# Connect to Ansible
 vagrant ssh ansible 
 ```
 
-### Run the Setup Playbook
+### Run the Setup Playbook From Ansible Control Host
 ```
-vagrant@ansible:$ cd /playbooks/setup
-vagrant@ansible:$ ansible-playbook -i hosts setup.yml
+ansible-playbook -i /playbooks/setup/hosts /playbooks/setup/setup.yml
 ```
