@@ -11,7 +11,7 @@ https://www.virtualbox.org/
 Vagrant 2.2.6  
 https://www.vagrantup.com/downloads.html
 
-### Check SSH Keys
+### Check Local SSH Keys
 
 ```
 ls -la ~/.ssh | grep id_rsa
@@ -25,30 +25,11 @@ id_rsa.pub
 
 ```
 vagrant up
+vagrant ssh ansible 
 ```
 
-
-
-
-
-
-
-
-
-
-
-
+### Run the Setup Playbook
 ```
-$ ## Accessing master
-$ vagrant ssh k8s-master
-
-vagrant@k8s-master:~$ kubectl get nodes
-NAME         STATUS   ROLES    AGE     VERSION
-k8s-master   Ready    master   18m     v1.13.3
-node-1       Ready    <none>   12m     v1.13.3
-node-2       Ready    <none>   6m22s   v1.13.3
-
-$ ## Accessing nodes
-$ vagrant ssh node-1
-$ vagrant ssh node-2
+vagrant@ansible:$ cd /playbooks/setup
+vagrant@ansible:$ ansible-playbook -i hosts setup.yml
 ```

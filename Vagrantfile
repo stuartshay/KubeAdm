@@ -21,10 +21,6 @@ Vagrant.configure("2") do |config|
         ansible.vm.provision  :shell, inline: "cp /vagrant/ansible.cfg /etc/ansible/ansible.cfg"
         ansible.vm.synced_folder "inventory/", "/inventory"
         ansible.vm.synced_folder "playbooks/", "/playbooks"
-
-     #   ansible.ssh.forward_agent    = true
-     #   ansible.ssh.insert_key       = false
-     #   ansible.ssh.private_key_path =  ["~/.vagrant.d/insecure_private_key","~/.ssh/id_rsa"]
                
         ansible.vm.provision "shell" do |s|
             ssh_prv_key = ""
