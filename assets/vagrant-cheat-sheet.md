@@ -22,12 +22,7 @@ Be sure that you are in the same directory as the Vagrantfile when running these
 - `vagrant push`                  -- Yes, vagrant can be configured to [deploy code](http://docs.vagrantup.com/v2/push/index.html)!
 - `vagrant up --provision | tee provision.log`  -- Runs `vagrant up`, forces provisioning and logs all output to a file
 
-## Installation
 
-### Set Vagrant Home
-```
-setx VAGRANT_HOME "D:/Vagrant"
-```
 
 ### Configure PuTTY for SSH Access
 

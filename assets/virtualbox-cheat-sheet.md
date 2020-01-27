@@ -21,19 +21,3 @@
 
 ###  Add Hardware storage components
 - `VBoxManage storagectl <usid|vname> --add sata --name "SCSI Controller"`
-
-
-### Installation
-
-File => Preferences       
-
-![Host Only Network](Host-Only.png)
-
-
-### Links
-
-https://thornelabs.net/2015/08/24/virtualbox-commands-cheat-sheet.html      
-http://it-ovid.blogspot.com/2012/10/virtual-box-headless-cheatsheet.html
-
-
-
