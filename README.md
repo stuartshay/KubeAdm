@@ -42,5 +42,5 @@ vagrant ssh ansible
 
 ### Run the Setup Playbook From Ansible Control Host
 ```
-ansible-playbook -i /playbooks/setup/hosts /playbooks/setup/setup.yml
+ansible-playbook  /playbooks/setup/setup.yml
 ```

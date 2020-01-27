@@ -20,9 +20,6 @@ Vagrant.configure("2") do |config|
         ansible.vm.provision  :shell, path: "provision/ansible-install.sh"
         ansible.vm.provision  :shell, inline: "cp /vagrant/ansible.cfg /etc/ansible/ansible.cfg"
         ansible.vm.provision  :shell, inline: "cp /vagrant/hosts /etc/ansible/hosts"
-        
-        
-        ansible.vm.synced_folder "inventory/", "/inventory"
         ansible.vm.synced_folder "playbooks/", "/playbooks"
                
         ansible.vm.provision "shell" do |s|
