@@ -9,6 +9,7 @@
         packages:
           - apt-transport-https
           - ca-certificates
+          - python-apt
           - curl
           - gnupg-agent
           - software-properties-common
