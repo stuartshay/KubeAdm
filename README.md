@@ -35,15 +35,18 @@ id_rsa.pub
 
 ```
 vagrant up
+```
 
-# Connect to Ansible
+### Connect to Ansible
+```
 vagrant ssh ansible 
 ```
 
 ### Run the Setup Playbook From Ansible Control Host
+
 ```
-ansible-playbook  /playbooks/setup/setup.yml
+ansible-playbook k8s-master.yml  --extra-vars "node_ip=192.168.50.10"
 
-ansible-playbook k8s.yml  --extra-vars "node_ip=192.168.50.10"   
-
+ansible-playbook k8s-node.yml --limit "k8s-node-1"  --extra-vars "node_ip=192.168.50.11"
+ansible-playbook k8s-node.yml  --limit  "k8s-node-2" --extra-vars "node_ip=192.168.50.12"
 ```
