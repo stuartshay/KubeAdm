@@ -43,4 +43,7 @@ vagrant ssh ansible
 ### Run the Setup Playbook From Ansible Control Host
 ```
 ansible-playbook  /playbooks/setup/setup.yml
+
+ansible-playbook k8s.yml  --extra-vars "node_ip=192.168.50.10"   
+
 ```
