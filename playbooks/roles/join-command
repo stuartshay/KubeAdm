@@ -1,0 +1,1 @@
+kubeadm join 192.168.50.10:6443 --token godgib.cgvzhgu9di17svwc     --discovery-token-ca-cert-hash sha256:0227dedeadd285e8167f5e1007547f1bfb15e306b96d5c72f915831f3aa487df 

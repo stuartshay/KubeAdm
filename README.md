@@ -12,7 +12,7 @@ https://kubernetes.io/blog/2019/03/15/kubernetes-setup-using-ansible-and-vagrant
 | k8s-master     | 192.168.50.10     |Kubernetes Master                           |
 | k8s-node-1     | 192.168.50.11     |Kubernetes Worker Node 1                    |
 | k8s-node-2     | 192.168.50.12     |Kubernetes Worker Node 2                    |
-
+| k8s-node-3     | 192.168.50.13     |Kubernetes Worker Node 3                    |
 ## Prerequisites
 
 VirtualBox v6.0  
@@ -32,21 +32,12 @@ id_rsa.pub
 ```
 
 ## Setup
-
 ```
 vagrant up
 ```
-
-### Connect to Ansible
-```
-vagrant ssh ansible 
-```
-
-### Run the Setup Playbook From Ansible Control Host
+NOTE: In case setup fails to perform any certain function while pipeline runs due to some techical issue for eg (network connection). Use
 
 ```
-ansible-playbook k8s-master.yml  --extra-vars "node_ip=192.168.50.10"
-
-ansible-playbook k8s-node.yml --limit "k8s-node-1"  --extra-vars "node_ip=192.168.50.11"
-ansible-playbook k8s-node.yml  --limit  "k8s-node-2" --extra-vars "node_ip=192.168.50.12"
+vagrant provision
 ```
+ 
