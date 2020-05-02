@@ -35,7 +35,7 @@ id_rsa.pub
 ```
 vagrant up
 ```
-## NOTE: In case setup fails to perform any certain function while pipeline runs due to some techical issue for eg (network connection). Use
+# NOTE: In case setup fails to perform any certain function while pipeline runs due to some techical issue for eg (network connection). Use
 
 ```
 vagrant provision
