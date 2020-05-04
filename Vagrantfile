@@ -2,7 +2,7 @@
 # vi: set ft=ruby :
 
 IMAGE_NAME = "bento/ubuntu-18.04"
-N = 3
+N = 1
 
 
 Vagrant.configure("2") do |config|
@@ -99,6 +99,7 @@ Vagrant.configure("2") do |config|
         ansible.vm.provision  :shell, inline: "cp /vagrant/ansible.cfg /etc/ansible/ansible.cfg"
         ansible.vm.provision  :shell, inline: "cp /vagrant/hosts /etc/ansible/hosts"
         ansible.vm.synced_folder "playbooks/", "/playbooks"
+        ansible.vm.synced_folder "kube-config/", "/kube-config"
 
         ansible.vm.provider "virtualbox" do |vmvm|
           vmvm.memory = 512
@@ -134,13 +135,13 @@ Vagrant.configure("2") do |config|
         ansible-playbook /playbooks/roles/k8s-node.yml --limit "k8s-node-1"  --extra-vars "node_ip=192.168.50.11"
         ansible-playbook /playbooks/roles/k8s-node.yml  --limit  "k8s-node-2" --extra-vars "node_ip=192.168.50.12"
         ansible-playbook /playbooks/roles/k8s-node.yml  --limit  "k8s-node-3" --extra-vars "node_ip=192.168.50.13"
+        scp vagrant@192.168.50.10://home/vagrant/.kube/config  ../../kube-config/
         SCRIPT
         ansible.vm.provision "shell", inline: $script, privileged: false
-
-        ansible.trigger.after [:up, :provision] do |trigger|
-          trigger.info = "Running kube-config.sh locally..."
-          trigger.run = {inline: "bash -c 'scp vagrant@192.168.50.10://home/vagrant/.kube/config  ~/.kube/config'"}
-        end
+        $script2 = <<-SCRIPT
+        scp vagrant@192.168.50.10://home/vagrant/.kube/config  ../../kube-config/
+        SCRIPT
+        ansible.vm.provision "shell", inline: $script2, privileged: false
 
 
     end
