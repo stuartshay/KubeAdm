@@ -135,9 +135,9 @@ Vagrant.configure("2") do |config|
         ansible-playbook /playbooks/roles/k8s-node.yml --limit "k8s-node-1"  --extra-vars "node_ip=192.168.50.11"
         ansible-playbook /playbooks/roles/k8s-node.yml  --limit  "k8s-node-2" --extra-vars "node_ip=192.168.50.12"
         ansible-playbook /playbooks/roles/k8s-node.yml  --limit  "k8s-node-3" --extra-vars "node_ip=192.168.50.13"
-        scp vagrant@192.168.50.10://home/vagrant/.kube/config  ../../kube-config/
         SCRIPT
         ansible.vm.provision "shell", inline: $script, privileged: false
+
         $script2 = <<-SCRIPT
         scp vagrant@192.168.50.10://home/vagrant/.kube/config  ../../kube-config/
         SCRIPT
