@@ -2,7 +2,7 @@
 # vi: set ft=ruby :
 
 IMAGE_NAME = "bento/ubuntu-18.04"
-N = 1
+N = 3
 
 
 Vagrant.configure("2") do |config|
@@ -130,13 +130,26 @@ Vagrant.configure("2") do |config|
               exit 0
             SHELL
           end
-        $script = <<-SCRIPT
+        $script0 = <<-SCRIPT
         ansible-playbook /playbooks/roles/k8s-master.yml  --extra-vars "node_ip=192.168.50.10"
-        ansible-playbook /playbooks/roles/k8s-node.yml --limit "k8s-node-1"  --extra-vars "node_ip=192.168.50.11"
-        ansible-playbook /playbooks/roles/k8s-node.yml  --limit  "k8s-node-2" --extra-vars "node_ip=192.168.50.12"
-        ansible-playbook /playbooks/roles/k8s-node.yml  --limit  "k8s-node-3" --extra-vars "node_ip=192.168.50.13"
         SCRIPT
-        ansible.vm.provision "shell", inline: $script, privileged: false
+        ansible.vm.provision "shell", inline: $script0, privileged: false
+
+        $script = <<-SCRIPT
+        START=1
+        END=$1
+        for (( i=$START; i<=$END; i++ ))
+        do
+        	let a=10
+        	let sum=$((a + i))
+        ansible-playbook /playbooks/roles/k8s-node.yml --limit "k8s-node-$i"  --extra-vars "node_ip=192.168.50.$sum"
+        done
+        SCRIPT
+        ansible.vm.provision "shell" do |shell|
+        shell.inline = $script
+        shell.privileged = false
+        shell.args= N
+        end
 
         $script2 = <<-SCRIPT
         scp vagrant@192.168.50.10://home/vagrant/.kube/config  ../../kube-config/
