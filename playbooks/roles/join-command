@@ -1,1 +1,1 @@
-kubeadm join 192.168.50.10:6443 --token ibwep7.ipxoh041urix0lvx     --discovery-token-ca-cert-hash sha256:7183c6bbcaf6729488dcc7b3e212e1026381239378ed77b943f3c6495335140a 
+kubeadm join 192.168.50.10:6443 --token zttpi7.n0czpvw8esmp1mva     --discovery-token-ca-cert-hash sha256:c544ce83dbe90f04c6d1d3acd15ef0a2f78c442f70c847cc50e4cc2f523c8948 
