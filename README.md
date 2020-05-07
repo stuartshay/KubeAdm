@@ -1,4 +1,4 @@
-## Kubernetes Using Ansible and Vagrant
+# Kubernetes Using Ansible and Vagrant
 
  A multi node Kubernetes cluster for development purposes using Vagrant and Ansible.      
 
@@ -35,8 +35,8 @@ id_rsa.pub
 ```
 vagrant up
 ```
-### NOTE: In case setup fails to perform any certain function while pipeline runs due to some techical issue for eg (network connection). Use
 
+Reprovisioning of the vagrant machine
 ```
 vagrant provision
 ```

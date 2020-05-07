@@ -2,7 +2,7 @@
 # vi: set ft=ruby :
 
 IMAGE_NAME = "bento/ubuntu-18.04"
-N = 3
+N = 1
 
 
 Vagrant.configure("2") do |config|
@@ -10,10 +10,9 @@ Vagrant.configure("2") do |config|
 
     config.vm.provider "virtualbox" do |v|
       #Global settings for each virtual machine
-      #indivisual can be changed from inside every VM's code block
-        v.memory = 1024
-        v.cpus = 2
-    #    v.gui = true
+      v.memory = 1024
+      v.cpus = 2
+       # v.gui = true
     end
 
 
@@ -25,6 +24,8 @@ Vagrant.configure("2") do |config|
         master.vm.provider "virtualbox" do |vmvm|
           vmvm.memory = 2048
         end
+
+        master.vm.provision "shell", path: "provision/base-provision.sh", privileged: true
 
         master.vm.provision "shell" do |s|
             ssh_prv_key = ""
@@ -60,7 +61,8 @@ Vagrant.configure("2") do |config|
           node.vm.box = IMAGE_NAME
           node.vm.network "private_network", ip: "192.168.50.#{i + 10}"
           node.vm.hostname = "node-#{i}"
-
+          node.vm.provision "shell", path: "provision/base-provision.sh", privileged: true
+          
           node.vm.provision "shell" do |s|
             ssh_prv_key = ""
             ssh_pub_key = ""
@@ -91,6 +93,7 @@ Vagrant.configure("2") do |config|
 
         end
     end
+    
     config.vm.define "ansible" do |ansible|
         ansible.vm.box = IMAGE_NAME
         ansible.vm.network "private_network", ip: "192.168.50.5"
