@@ -98,6 +98,7 @@ Vagrant.configure("2") do |config|
       nfs.vm.box = IMAGE_NAME
       nfs.vm.hostname = "nfs-server.example.com"
       nfs.vm.network "private_network", ip: "192.168.50.100"
+      nfs.vm.synced_folder "nfs-share/", "/srv/nfs/kubedata"
       nfs.vm.provider "virtualbox" do |n|
         n.name = "nfs-server"
         n.memory = 1024
