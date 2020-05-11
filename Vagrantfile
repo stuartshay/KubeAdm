@@ -94,6 +94,19 @@ Vagrant.configure("2") do |config|
         end
     end
     
+    config.vm.define "nfs-server" do |nfs|
+      nfs.vm.box = IMAGE_NAME
+      nfs.vm.hostname = "nfs-server.example.com"
+      nfs.vm.network "private_network", ip: "192.168.50.100"
+      nfs.vm.provider "virtualbox" do |n|
+        n.name = "nfs-server"
+        n.memory = 1024
+        n.cpus = 1
+      end
+      nfs.vm.provision "shell",path: "provision/nfs-provision.sh"
+    end
+
+
     config.vm.define "ansible" do |ansible|
         ansible.vm.box = IMAGE_NAME
         ansible.vm.network "private_network", ip: "192.168.50.5"
@@ -161,7 +174,6 @@ Vagrant.configure("2") do |config|
 
 
     end
-
 
 
 end

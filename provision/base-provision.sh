@@ -9,6 +9,9 @@ EOF
 # install Dependencies
 sudo apt-get install -y apt-transport-https ca-certificates curl
 
+# Install NFS Client
+sudo apt install nfs-common
+
 # Python 3 Default
 sudo update-alternatives --install /usr/bin/python python /usr/bin/python3 10
 

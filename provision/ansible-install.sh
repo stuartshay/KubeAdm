@@ -5,6 +5,9 @@ apt update -y
 apt upgrade -y
 apt install  apt-transport-https python3-pip dos2unix jq tree -y
 
+# Install NFS Client
+sudo apt install nfs-common
+
 # Python 3 Default
 update-alternatives --install /usr/bin/python python /usr/bin/python3 10
 
