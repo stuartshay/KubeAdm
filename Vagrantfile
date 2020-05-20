@@ -12,7 +12,7 @@ Vagrant.configure("2") do |config|
       #Global settings for each virtual machine
       v.memory = 1024
       v.cpus = 2
-       # v.gui = true
+      v.gui = true
     end
 
 
@@ -22,7 +22,7 @@ Vagrant.configure("2") do |config|
         master.vm.hostname = "k8s-master"
 
         master.vm.provider "virtualbox" do |vmvm|
-          vmvm.memory = 2048
+          vmvm.memory = 1500
         end
 
         master.vm.provision "shell", path: "provision/base-provision.sh", privileged: true
@@ -62,7 +62,7 @@ Vagrant.configure("2") do |config|
           node.vm.network "private_network", ip: "192.168.50.#{i + 10}"
           node.vm.hostname = "node-#{i}"
           node.vm.provision "shell", path: "provision/base-provision.sh", privileged: true
-          
+
           node.vm.provision "shell" do |s|
             ssh_prv_key = ""
             ssh_pub_key = ""
@@ -93,15 +93,15 @@ Vagrant.configure("2") do |config|
 
         end
     end
-    
+
     config.vm.define "nfs-server" do |nfs|
       nfs.vm.box = IMAGE_NAME
       nfs.vm.hostname = "nfs-server.example.com"
       nfs.vm.network "private_network", ip: "192.168.50.100"
-      nfs.vm.synced_folder "nfs-share/", "/srv/nfs/kubedata"
+      nfs.vm.synced_folder "nfs-share/", "/srv/nfs/kubedata" 
       nfs.vm.provider "virtualbox" do |n|
         n.name = "nfs-server"
-        n.memory = 1024
+        n.memory = 512
         n.cpus = 1
       end
       nfs.vm.provision "shell",path: "provision/nfs-provision.sh"
