@@ -12,7 +12,7 @@ Vagrant.configure("2") do |config|
       #Global settings for each virtual machine
       v.memory = 1024
       v.cpus = 2
-      v.gui = true
+      #v.gui = true
     end
 
 
@@ -98,13 +98,21 @@ Vagrant.configure("2") do |config|
       nfs.vm.box = IMAGE_NAME
       nfs.vm.hostname = "nfs-server.example.com"
       nfs.vm.network "private_network", ip: "192.168.50.100"
-      nfs.vm.synced_folder "nfs-share/", "/srv/nfs/kubedata" 
+      nfs.vm.synced_folder "nfs-share/", "/srv/nfs/kubedata"
       nfs.vm.provider "virtualbox" do |n|
         n.name = "nfs-server"
         n.memory = 512
         n.cpus = 1
       end
       nfs.vm.provision "shell",path: "provision/nfs-provision.sh"
+      nfs.trigger.after :up do |trigger_up|
+      trigger_up.warn = "Provisioning PV/PVC"
+      trigger_up.run = {inline: "helm install pv-local provision/local-pv"}
+    end
+      nfs.trigger.after :halt do |trigger_halt|
+      trigger_halt.warn = "Deleting PV/PVC"
+      trigger_halt.run = {inline: "helm delete pv-local "}
+    end
     end
 
 

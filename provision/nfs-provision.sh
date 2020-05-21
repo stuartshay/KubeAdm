@@ -17,14 +17,33 @@ mkdir -p /srv/nfs/kubedata/db
 mkdir -p /srv/nfs/kubedata/storage
 mkdir -p /srv/nfs/kubedata/logs
 
+mkdir -p /srv/nfs/kubetesting
+mkdir -p /srv/nfs/kubetesting/bitnami-wordpress
+mkdir -p /srv/nfs/kubetesting/storage
+
 echo "[TASK 4] Update the shared folder access"
 sudo chown -R nobody:nogroup /srv/nfs/kubedata
 sudo chmod 777 /srv/nfs/kubedata
 
+sudo chown -R nobody:nogroup /srv/nfs/kubetesting
+sudo chmod 777 /srv/nfs/kubetesting
+
+sudo chown -R nobody:nogroup /srv/nfs/kubetesting/bitnami-wordpress
+sudo chmod 777 /srv/nfs/kubetesting/bitnami-wordpress
+
+sudo chown -R nobody:nogroup /srv/nfs/kubetesting/bitnami-wordpress
+sudo chmod 777 /srv/nfs/kubetesting/storage
+
+echo "[TASK 5 Deleting and re creating exports file for updation"
+sudo rm -r /etc/exports
+sudo touch /etc/exports
 
 echo "[TASK 5] Make the kubedata directory available on the network"
 cat >>/etc/exports<<EOF
 /srv/nfs/kubedata    *(rw,sync,no_subtree_check,no_root_squash)
+/srv/nfs/kubetesting    *(rw,sync,no_subtree_check,no_root_squash)
+/srv/nfs/kubetesting/bitnami-wordpress    *(rw,sync,no_subtree_check,no_root_squash)
+/srv/nfs/kubetesting/storage   *(rw,sync,no_subtree_check,no_root_squash)
 EOF
 
 echo "[TASK 6] Export the updates"

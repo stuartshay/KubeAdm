@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: local-nfs-pvc-1
+  labels:
+    tier: storage
+    app: app-storage
+spec:
+  storageClassName: nfs-pv1
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 2Gi

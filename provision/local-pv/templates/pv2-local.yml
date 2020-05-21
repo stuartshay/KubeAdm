@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: local-nfs-pv-2
+  labels:
+    tier: storage
+spec:
+  capacity:
+    storage: 3Gi
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteOnce
+    - ReadOnlyMany
+  storageClassName: nfs-pv2
+  nfs:
+    path: "/srv/nfs/kubetesting/storage"
+    server: 192.168.50.100
