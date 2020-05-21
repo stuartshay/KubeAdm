@@ -105,6 +105,7 @@ Vagrant.configure("2") do |config|
         n.cpus = 1
       end
       nfs.vm.provision "shell",path: "provision/nfs-provision.sh"
+<<<<<<< HEAD
       nfs.trigger.after :up do |trigger_up|
       trigger_up.warn = "Provisioning PV/PVC"
       trigger_up.run = {inline: "helm install pv-local provision/local-pv"}
@@ -113,6 +114,35 @@ Vagrant.configure("2") do |config|
       trigger_halt.warn = "Deleting PV/PVC"
       trigger_halt.run = {inline: "helm delete pv-local "}
     end
+=======
+      nfs.vm.provision "shell" do |s|
+        ssh_prv_key = ""
+        ssh_pub_key = ""
+        if File.file?("#{Dir.home}/.ssh/id_rsa")
+            ssh_prv_key = File.read("#{Dir.home}/.ssh/id_rsa")
+            ssh_pub_key = File.readlines("#{Dir.home}/.ssh/id_rsa.pub").first.strip
+        else
+            puts "No SSH key found. You will need to remedy this before pushing to the repository."
+        end
+        s.inline = <<-SHELL
+
+        if grep -sq "#{ssh_pub_key}" /home/vagrant/.ssh/authorized_keys; then
+            echo "SSH keys already provisioned."
+            exit 0;
+        fi
+            echo "SSH key provisioning."
+            mkdir -p /home/vagrant/.ssh/
+            touch /home/vagrant/.ssh/authorized_keys
+            echo #{ssh_pub_key} >> /home/vagrant/.ssh/authorized_keys
+            echo #{ssh_pub_key} > /home/vagrant/.ssh/id_rsa.pub
+            chmod 644 /home/vagrant/.ssh/id_rsa.pub
+            echo "#{ssh_prv_key}" > /home/vagrant/.ssh/id_rsa
+            chmod 600 /home/vagrant/.ssh/id_rsa
+            chown -R vagrant:vagrant /home/vagrant
+            exit 0
+        SHELL
+        end
+>>>>>>> 4809bb5d4811383ccaddc4a91367f6c0f57bb37c
     end
 
 
