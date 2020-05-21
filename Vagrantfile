@@ -105,7 +105,7 @@ Vagrant.configure("2") do |config|
         n.cpus = 1
       end
       nfs.vm.provision "shell",path: "provision/nfs-provision.sh"
-<<<<<<< HEAD
+
       nfs.trigger.after :up do |trigger_up|
       trigger_up.warn = "Provisioning PV/PVC"
       trigger_up.run = {inline: "helm install pv-local provision/local-pv"}
@@ -114,7 +114,7 @@ Vagrant.configure("2") do |config|
       trigger_halt.warn = "Deleting PV/PVC"
       trigger_halt.run = {inline: "helm delete pv-local "}
     end
-=======
+
       nfs.vm.provision "shell" do |s|
         ssh_prv_key = ""
         ssh_pub_key = ""
@@ -142,7 +142,6 @@ Vagrant.configure("2") do |config|
             exit 0
         SHELL
         end
->>>>>>> 4809bb5d4811383ccaddc4a91367f6c0f57bb37c
     end
 
 
