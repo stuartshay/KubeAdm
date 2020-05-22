@@ -1,1 +1,1 @@
-kubeadm join 192.168.50.10:6443 --token obs46w.aky1qxqwuhwr29wq     --discovery-token-ca-cert-hash sha256:eaa50059d6e88c137388f029888ac0101d06a310a475c2e3851180f3066e90a9 
+kubeadm join 192.168.50.10:6443 --token nyqwj9.5qy3al232bb6pev0     --discovery-token-ca-cert-hash sha256:5127eb3b41f653045c870794afd4dab572e83d00840b1c38457e3a86307d7ab3 

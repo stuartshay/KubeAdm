@@ -1,0 +1,13 @@
+---
+
+    - name: Downloading aws cli package
+      shell: curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+
+    - name: Unarchive file 
+      unarchive:
+        src: /home/vagrant/awscliv2.zip
+        dest: /home/vagrant/
+        remote_src: yes
+
+    - name: Installing CLI
+      shell: sudo ./aws/install

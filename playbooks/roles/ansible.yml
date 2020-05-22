@@ -1,0 +1,6 @@
+---
+    - hosts: ansible
+      become: true
+      roles:
+        - docker
+        - dot-net

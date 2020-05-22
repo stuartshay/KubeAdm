@@ -1,5 +1,5 @@
 ---
-  
+
     - name: Install packages that allow apt to be used over HTTPS
       apt:
          name: "{{ packages }}"
@@ -25,14 +25,14 @@
           state: present
 
     - name: Install docker and its dependecies
-      apt: 
+      apt:
         name: "{{ packages }}"
         state: present
         update_cache: yes
       vars:
         packages:
-          - docker-ce 
-          - docker-ce-cli 
+          - docker-ce
+          - docker-ce-cli
           - containerd.io
         notify:
             - docker status
@@ -41,4 +41,7 @@
       user:
         name: vagrant
         group: docker
-      
+    - name: Install docker-compose
+      shell: curl -L https://github.com/docker/compose/releases/download/1.7.0-rc1/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose
+    - name: Give permissions
+      shell: chmod +x /usr/local/bin/docker-compose
