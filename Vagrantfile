@@ -99,6 +99,8 @@ Vagrant.configure("2") do |config|
       nfs.vm.hostname = "nfs-server.example.com"
       nfs.vm.network "private_network", ip: "192.168.50.100"
       nfs.vm.synced_folder "nfs-share/", "/srv/nfs/kubedata"
+      nfs.vm.synced_folder "provision/docker/", "/docker"
+      
       nfs.vm.provider "virtualbox" do |n|
         n.name = "nfs-server"
         n.memory = 512
@@ -148,12 +150,14 @@ Vagrant.configure("2") do |config|
         ansible.vm.synced_folder "playbooks/", "/playbooks"
         ansible.vm.synced_folder "kube-config/", "/kube-config"
         ansible.trigger.after :up do |trigger_up|
-        trigger_up.warn = "Provisioning PV/PVC"
-        trigger_up.run = {inline: "helm install pv-local provision/local-pv"}
+       ## trigger_up.warn = "Provisioning PV/PVC"
+   ##     trigger_up.run = {inline: "helm install pv-local provision/local-pv"}
+   # THIS NEEDS TO RUN AFTER Cluster is Setup (Check Cluster Alive)
+   ## (If CLUSTER NOT ALIVE - SKIP But Show ERROR)
       end
         ansible.trigger.after :halt do |trigger_halt|
-        trigger_halt.warn = "Deleting PV/PVC"
-        trigger_halt.run = {inline: "helm delete pv-local "}
+     #   trigger_halt.warn = "Deleting PV/PVC"
+     #   trigger_halt.run = {inline: "helm delete pv-local "}
       end
         ansible.vm.provider "virtualbox" do |vmvm|
           vmvm.memory = 512

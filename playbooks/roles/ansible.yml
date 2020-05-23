@@ -3,4 +3,5 @@
       become: true
       roles:
         - docker
-        - dot-net
+        - dotnet-core
+        - aws-cli
