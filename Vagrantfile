@@ -149,16 +149,6 @@ Vagrant.configure("2") do |config|
         ansible.vm.synced_folder "provision/helm", "/helm"
         ansible.vm.synced_folder "kube-config/", "/kube-config"
 
-        ansible.trigger.after :up do |trigger_up|
-       ## trigger_up.warn = "Provisioning PV/PVC"
-   ##     trigger_up.run = {inline: "helm install pv-local provision/local-pv"}
-   # THIS NEEDS TO RUN AFTER Cluster is Setup (Check Cluster Alive)
-   ## (If CLUSTER NOT ALIVE - SKIP But Show ERROR)
-      end
-        ansible.trigger.after :halt do |trigger_halt|
-     #   trigger_halt.warn = "Deleting PV/PVC"
-     #   trigger_halt.run = {inline: "helm delete pv-local "}
-      end
         ansible.vm.provider "virtualbox" do |vmvm|
           vmvm.memory = 512
         end
@@ -226,7 +216,11 @@ Vagrant.configure("2") do |config|
         SCRIPT
         ansible.vm.provision "shell", inline: $script4, privileged: false
 
-        # Deploy playbook pvc
+        $script5 = <<-SCRIPT
+        helm install pv-local /helm/local-pv 
+        SCRIPT
+        ansible.vm.provision "shell", inline: $script5, privileged: false
+
 
     end
 
