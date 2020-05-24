@@ -6,7 +6,7 @@ metadata:
     tier: storage
 spec:
   capacity:
-    storage: 3Gi
+    storage: 8Gi
   volumeMode: Filesystem
   accessModes:
     - ReadWriteOnce
