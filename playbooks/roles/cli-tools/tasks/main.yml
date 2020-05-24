@@ -10,6 +10,14 @@
   shell: mv ./kubectl /usr/local/bin/kubectl
   become: yes
 
+- name: Setup kubeconfig for vagrant user
+  command: "{{ item }}"
+  with_items:
+     - mkdir -p /home/vagrant/.kube
+     - cp -i /kube-config/config  /home/vagrant/.kube/config
+     - chown vagrant:vagrant /home/vagrant/.kube/config
+
+
 
 
 - name: Installing Helm

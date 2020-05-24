@@ -2,8 +2,9 @@
     - hosts: ansible
       become: true
       roles:
+        - dotnet-core
         - aws-cli
         - cli-tools
         - docker
-        - dotnet-core
+   
 

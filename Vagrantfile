@@ -226,10 +226,6 @@ Vagrant.configure("2") do |config|
         SCRIPT
         ansible.vm.provision "shell", inline: $script4, privileged: false
 
-        # Copy Adter kube  ~/. kube/config 
-        ansible.vm.provision "shell", inline: "mkdir ~/.kube"
-        #ansible.vm.provision "file", source: "kube-config/config", destination: "~/.kube/config"
-
         # Deploy playbook pvc
 
     end

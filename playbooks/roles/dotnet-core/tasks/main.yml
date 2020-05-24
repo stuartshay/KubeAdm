@@ -20,8 +20,10 @@
 
     
   - name: Install .NET Core SDK
-    apt:
-      name: dotnet-sdk-3.1
+    apt: 
+      name: "{{ dotnet_sdk_version }}"
       state: present
       update_cache: yes
     become: true
+
+    
