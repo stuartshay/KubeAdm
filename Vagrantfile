@@ -137,8 +137,6 @@ Vagrant.configure("2") do |config|
         end
     end
 
-
-
     config.vm.define "ansible" do |ansible|
         ansible.vm.box = IMAGE_NAME
         ansible.vm.network "private_network", ip: "192.168.50.5"
@@ -148,7 +146,9 @@ Vagrant.configure("2") do |config|
         ansible.vm.provision  :shell, inline: "cp /vagrant/hosts /etc/ansible/hosts"
 
         ansible.vm.synced_folder "playbooks/", "/playbooks"
+        ansible.vm.synced_folder "provision/helm", "/helm"
         ansible.vm.synced_folder "kube-config/", "/kube-config"
+
         ansible.trigger.after :up do |trigger_up|
        ## trigger_up.warn = "Provisioning PV/PVC"
    ##     trigger_up.run = {inline: "helm install pv-local provision/local-pv"}
@@ -195,7 +195,6 @@ Vagrant.configure("2") do |config|
         ansible.vm.provision "shell", inline: $script0, privileged: false
 
 
-
         $script = <<-SCRIPT
         START=1
         END=$1
@@ -221,10 +220,18 @@ Vagrant.configure("2") do |config|
         ansible-playbook /playbooks/roles/nfs.yml --limit "nfs-server"
         SCRIPT
         ansible.vm.provision "shell", inline: $script3, privileged: false
+        
         $script4 = <<-SCRIPT
         ansible-playbook /playbooks/roles/ansible.yml --limit "ansible"
         SCRIPT
         ansible.vm.provision "shell", inline: $script4, privileged: false
+
+        # Copy Adter kube  ~/. kube/config 
+        ansible.vm.provision "shell", inline: "mkdir ~/.kube"
+        #ansible.vm.provision "file", source: "kube-config/config", destination: "~/.kube/config"
+
+        # Deploy playbook pvc
+
     end
 
 

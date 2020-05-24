@@ -7,7 +7,8 @@
   shell: chmod +x ./kubectl
 
 - name: Move the binary in to your PATH
-  shell: sudo mv ./kubectl /usr/local/bin/kubectl
+  shell: mv ./kubectl /usr/local/bin/kubectl
+  become: yes
 
 
 
@@ -19,4 +20,17 @@
 
 - name: Move the binary in to your PATH
   shell: ./get_helm.sh
+
+
+
+
+
+
+
+
+  
+
+
+
+
 

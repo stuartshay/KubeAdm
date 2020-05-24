@@ -16,4 +16,6 @@
         remote_src: yes
 
   - name: Installing CLI
-    shell: sudo ./aws/install
+    shell:  ./aws/install --update
+    become: yes
+
