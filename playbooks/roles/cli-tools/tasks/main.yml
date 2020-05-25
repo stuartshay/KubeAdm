@@ -10,14 +10,20 @@
   shell: mv ./kubectl /usr/local/bin/kubectl
   become: yes
 
-- name: Setup kubeconfig for vagrant user
-  command: "{{ item }}"
-  with_items:
-     - mkdir -p /home/vagrant/.kube
-     - cp -i /kube-config/config  /home/vagrant/.kube/config
-     - chown vagrant:vagrant /home/vagrant/.kube/config
 
+- name: Setup kube.config - Create Directory
+  file:
+   path: /home/vagrant/.kube
+   state: directory
+   mode: "u=rw,g=wx,o=rwx"
+   recurse: yes
 
+- name: Copy kube.config 
+  copy:
+     src: /kube-config/config
+     dest: /home/vagrant/.kube/config
+     owner: vagrant
+     backup: yes
 
 
 - name: Installing Helm
