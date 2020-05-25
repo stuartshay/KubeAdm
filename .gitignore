@@ -4,4 +4,6 @@ tokens
 volumes
 .vs
 
+join-command
+kube-config/config
 
