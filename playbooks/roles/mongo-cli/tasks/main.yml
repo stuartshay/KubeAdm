@@ -1,17 +1,19 @@
 ---
 
   - name: Import the public key used by the package management system
-    shell:  wget -qO - https://www.mongodb.org/static/pgp/server-4.2.asc | sudo apt-key add -
-    become: yes
-
+    apt_key:
+     url: https://www.mongodb.org/static/pgp/server-4.2.asc 
+     state: present
+  
   - name: Install gnupg
     apt:
       name: gnupg
       update_cache: true
 
   - name: Create a list file for MongoDB
-    shell:  echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu bionic/mongodb-org/4.2 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-4.2.list
-    become: yes
+    apt_repository:
+      repo: deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu bionic/mongodb-org/4.2 multiverse
+      state: present
 
   - name: Install MongoDB Shell
     apt:

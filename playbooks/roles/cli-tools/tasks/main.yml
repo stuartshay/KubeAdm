@@ -27,13 +27,13 @@
 
 
 - name: Installing Helm
-  shell: curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3
-
-- name: Make the helm binary executable.
-  shell: chmod 700 get_helm.sh
+  get_url:
+    url: https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3
+    dest: /tmp/get_helm.sh
+    mode: '700'
 
 - name: Move the binary in to your PATH
-  shell: ./get_helm.sh
+  shell: /tmp/get_helm.sh
 
 
 
