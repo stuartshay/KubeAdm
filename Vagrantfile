@@ -100,7 +100,7 @@ Vagrant.configure("2") do |config|
       nfs.vm.network "private_network", ip: "192.168.50.100"
       nfs.vm.synced_folder "nfs-share/", "/srv/nfs/kubedata"
       nfs.vm.synced_folder "provision/docker/", "/docker"
-      
+
       nfs.vm.provider "virtualbox" do |n|
         n.name = "nfs-server"
         n.memory = 512
@@ -134,6 +134,10 @@ Vagrant.configure("2") do |config|
             chown -R vagrant:vagrant /home/vagrant
             exit 0
         SHELL
+        end
+        nfs.trigger.after :up do |trigger|
+          trigger.warn = "Starting minio containers"
+          trigger.run_remote = {inline: "docker-compose -f /docker/minio/docker-compose.yaml up -d"}
         end
     end
 
@@ -210,17 +214,21 @@ Vagrant.configure("2") do |config|
         ansible-playbook /playbooks/roles/nfs.yml --limit "nfs-server"
         SCRIPT
         ansible.vm.provision "shell", inline: $script3, privileged: false
-        
+
         $script4 = <<-SCRIPT
         ansible-playbook /playbooks/roles/ansible.yml --limit "ansible"
         SCRIPT
         ansible.vm.provision "shell", inline: $script4, privileged: false
 
         $script5 = <<-SCRIPT
-        helm install pv-local /helm/local-pv 
+        helm install pv-local /helm/local-pv
         SCRIPT
         ansible.vm.provision "shell", inline: $script5, privileged: false
 
+        $script6 = <<-SCRIPT
+        helm install dynamic-storage /helm/dynamic-storage
+        SCRIPT
+        ansible.vm.provision "shell", inline: $script6, privileged: false
 
     end
 

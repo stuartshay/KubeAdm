@@ -1,0 +1,4 @@
+---
+
+    - name: Install packages that allow apt to be used over HTTPS
+      shell:  docker swarm init --advertise-addr 192.168.50.100
