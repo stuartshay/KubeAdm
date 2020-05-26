@@ -46,7 +46,6 @@
       shell: "curl -L https://github.com/docker/compose/releases/download/{{docker_compose_version}}/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose"
      
     - name: Give permissions
-      shell: chmod +x /usr/local/bin/docker-compose
-
-      
-      
+      file:
+       path: /usr/local/bin/docker-compose
+       mode: +x

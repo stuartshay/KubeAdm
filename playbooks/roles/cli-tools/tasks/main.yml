@@ -10,24 +10,30 @@
   shell: mv ./kubectl /usr/local/bin/kubectl
   become: yes
 
-- name: Setup kubeconfig for vagrant user
-  command: "{{ item }}"
-  with_items:
-     - mkdir -p /home/vagrant/.kube
-     - cp -i /kube-config/config  /home/vagrant/.kube/config
-     - chown vagrant:vagrant /home/vagrant/.kube/config
 
+- name: Setup kube.config - Create Directory
+  file:
+   path: /home/vagrant/.kube
+   state: directory
+   mode: "u=rw,g=wx,o=rwx"
+   recurse: yes
 
+- name: Copy kube.config 
+  copy:
+     src: /kube-config/config
+     dest: /home/vagrant/.kube/config
+     owner: vagrant
+     backup: yes
 
 
 - name: Installing Helm
-  shell: curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3
-
-- name: Make the helm binary executable.
-  shell: chmod 700 get_helm.sh
+  get_url:
+    url: https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3
+    dest: /tmp/get_helm.sh
+    mode: '700'
 
 - name: Move the binary in to your PATH
-  shell: ./get_helm.sh
+  shell: /tmp/get_helm.sh
 
 
 
