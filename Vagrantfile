@@ -135,10 +135,8 @@ Vagrant.configure("2") do |config|
             exit 0
         SHELL
         end
-        nfs.trigger.after :up do |trigger|
-          trigger.warn = "Starting minio containers"
-          trigger.run_remote = {inline: "docker-compose -f /docker/minio/docker-compose.yaml up -d"}
-        end
+
+
     end
 
     config.vm.define "ansible" do |ansible|
@@ -152,7 +150,10 @@ Vagrant.configure("2") do |config|
         ansible.vm.synced_folder "playbooks/", "/playbooks"
         ansible.vm.synced_folder "provision/helm", "/helm"
         ansible.vm.synced_folder "kube-config/", "/kube-config"
-
+        ansible.trigger.after :up do |trigger|
+          trigger.warn = "Starting minio containers"
+          trigger.run_remote = {inline: "ansible-playbook /playbooks/roles/nfs-minio-autostart.yml --limit nfs-server" ,privileged: false}
+        end
         ansible.vm.provider "virtualbox" do |vmvm|
           vmvm.memory = 512
         end

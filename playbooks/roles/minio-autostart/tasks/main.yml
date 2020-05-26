@@ -1,0 +1,4 @@
+---
+
+    - name: Restarting minio containers
+      shell: docker-compose -f /docker/minio/docker-compose.yaml up -d
