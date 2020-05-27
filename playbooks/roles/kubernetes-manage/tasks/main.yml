@@ -1,0 +1,8 @@
+---
+
+  - name: Ensure the myapp Namespace exists.
+    k8s:
+      api_version: v1
+      kind: Namespace
+      name: myapp
+      state: present
