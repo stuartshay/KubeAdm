@@ -1,5 +1,6 @@
 ---
-
+- hosts: localhost
+  tasks:
   - name: Create a k8s namespace
     k8s:
       name: testing

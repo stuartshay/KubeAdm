@@ -2,7 +2,7 @@
 # vi: set ft=ruby :
 
 IMAGE_NAME = "bento/ubuntu-18.04"
-N = 2
+N = 1
 
 
 Vagrant.configure("2") do |config|
@@ -10,7 +10,7 @@ Vagrant.configure("2") do |config|
 
     config.vm.provider "virtualbox" do |v|
       #Global settings for each virtual machine
-      v.memory = 1024
+      v.memory = 1500
       v.cpus = 2
       #v.gui = true
     end
@@ -189,7 +189,6 @@ Vagrant.configure("2") do |config|
         SCRIPT
         ansible.vm.provision "shell", inline: $script0, privileged: false
 
-
         $script = <<-SCRIPT
         START=1
         END=$1
@@ -226,10 +225,23 @@ Vagrant.configure("2") do |config|
         SCRIPT
         ansible.vm.provision "shell", inline: $script5, privileged: false
 
+
+        $script8 = <<-SCRIPT
+        kubectl create namespace metallb-system
+        kubectl create namespace kubernetes-dashboard
+        SCRIPT
+        ansible.vm.provision "shell", inline: $script8, privileged: false
+        $script7 = <<-SCRIPT
+        ansible-playbook /playbooks/roles/k8s-master-addon.yml --limit "k8s-master"
+        SCRIPT
+        ansible.vm.provision "shell", inline: $script7, privileged: false
+
         $script6 = <<-SCRIPT
         helm install dynamic-storage /helm/dynamic-storage
         SCRIPT
         ansible.vm.provision "shell", inline: $script6, privileged: false
+
+
 
     end
 

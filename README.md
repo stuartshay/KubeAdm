@@ -42,3 +42,16 @@ Reprovisioning of the vagrant machine
 ```
 vagrant provision
 ```
+## Access Kubernetes dashboard
+Step 1. Run
+```bash
+kubectl proxy
+```
+Step 2. Goto browser
+```bash
+http://localhost:8001/api/v1/namespaces/kubernetes-dashboard/services/https:kubernetes-dashboard:/proxy/.
+```
+Step 3. Generate token and login
+```bash
+kubectl -n kubernetes-dashboard describe secret $(kubectl -n kubernetes-dashboard get secret | grep admin-user | awk '{print $1}')
+```
