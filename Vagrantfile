@@ -184,7 +184,7 @@ Vagrant.configure("2") do |config|
               exit 0
             SHELL
           end
-        $script0 = <<-SCRIPT
+=begin        $script0 = <<-SCRIPT
         ansible-playbook /playbooks/roles/k8s-master.yml  --extra-vars "node_ip=192.168.50.10"
         SCRIPT
         ansible.vm.provision "shell", inline: $script0, privileged: false
@@ -209,7 +209,7 @@ Vagrant.configure("2") do |config|
         scp vagrant@192.168.50.10://home/vagrant/.kube/config  ../../kube-config/
         SCRIPT
         ansible.vm.provision "shell", inline: $script2, privileged: false
-
+=end
         $script3 = <<-SCRIPT
         ansible-playbook /playbooks/roles/nfs.yml --limit "nfs-server"
         SCRIPT
@@ -219,7 +219,7 @@ Vagrant.configure("2") do |config|
         ansible-playbook /playbooks/roles/ansible.yml --limit "ansible"
         SCRIPT
         ansible.vm.provision "shell", inline: $script4, privileged: false
-
+=begin
         $script5 = <<-SCRIPT
         helm install pv-local /helm/local-pv
         SCRIPT
@@ -241,7 +241,7 @@ Vagrant.configure("2") do |config|
         SCRIPT
         ansible.vm.provision "shell", inline: $script6, privileged: false
 
-
+=end
 
     end
 

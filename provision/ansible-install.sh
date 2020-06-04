@@ -3,7 +3,7 @@
 # Prerequisites
 apt update -y
 apt upgrade -y
-apt install  apt-transport-https dos2unix jq tree -y
+apt install  apt-transport-https python3-pip dos2unix jq tree -y
 
 # Install NFS Client
 sudo apt install nfs-common
