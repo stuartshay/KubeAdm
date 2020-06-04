@@ -35,6 +35,7 @@ id_rsa.pub
 
 ## Setup
 ```
+vagrant box update
 vagrant up
 ```
 
