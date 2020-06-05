@@ -24,6 +24,9 @@ apt update -y
 apt install -y ansible
 
 pip3 install ansible-lint
+echo "#############Installing k8s modules#############"
+sudo -H pip3 install kubernetes
+sudo -H pip3 install openshift
 
 
 

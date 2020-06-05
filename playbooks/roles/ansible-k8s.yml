@@ -1,0 +1,5 @@
+---
+    - hosts: ansible
+      become: true
+      roles:
+        - kubernetes-manage
