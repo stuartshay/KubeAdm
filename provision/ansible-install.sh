@@ -27,10 +27,3 @@ pip3 install ansible-lint
 echo "#############Installing k8s modules#############"
 sudo -H pip3 install kubernetes
 sudo -H pip3 install openshift
-
-
-
-
-
-#pip3 install argcomplete
-#activate-global-python-argcomplete

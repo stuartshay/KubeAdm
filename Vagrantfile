@@ -221,7 +221,7 @@ Vagrant.configure("2") do |config|
         ansible.vm.provision "shell", inline: $script4, privileged: false
 
         $script9 = <<-SCRIPT
-        ansible-playbook /playbooks/roles/k8s-components.yml --limit "ansible"
+        ansible-playbook /playbooks/roles/k8s-configuration.yml --limit "ansible"
         SCRIPT
         ansible.vm.provision "shell", inline: $script9, privileged: false
 
@@ -231,24 +231,18 @@ Vagrant.configure("2") do |config|
         SCRIPT
         ansible.vm.provision "shell", inline: $script5, privileged: false
 
-
-        $script8 = <<-SCRIPT
-        kubectl create namespace metallb-system
-        kubectl create namespace kubernetes-dashboard
-        SCRIPT
-        ansible.vm.provision "shell", inline: $script8, privileged: false
-        $script7 = <<-SCRIPT
-        ansible-playbook /playbooks/roles/k8s-master-addon.yml --limit "k8s-master"
-        SCRIPT
-        ansible.vm.provision "shell", inline: $script7, privileged: false
-
         $script6 = <<-SCRIPT
         helm install dynamic-storage /helm/dynamic-storage
         SCRIPT
         ansible.vm.provision "shell", inline: $script6, privileged: false
 
-  
 
+        $script7 = <<-SCRIPT
+        ansible-playbook /playbooks/roles/k8s-master-addon.yml --limit "k8s-master"
+        SCRIPT
+        ansible.vm.provision "shell", inline: $script7, privileged: false
+
+  
 
     end
 
