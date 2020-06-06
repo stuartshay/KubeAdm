@@ -220,29 +220,26 @@ Vagrant.configure("2") do |config|
         SCRIPT
         ansible.vm.provision "shell", inline: $script4, privileged: false
 
-        $script9 = <<-SCRIPT
-        ansible-playbook /playbooks/roles/k8s-configuration.yml --limit "ansible"
-        SCRIPT
-        ansible.vm.provision "shell", inline: $script9, privileged: false
-
-
         $script5 = <<-SCRIPT
-        helm install pv-local /helm/local-pv
+        ansible-playbook /playbooks/roles/k8s-configuration.yml --limit "ansible"
         SCRIPT
         ansible.vm.provision "shell", inline: $script5, privileged: false
 
         $script6 = <<-SCRIPT
-        helm install dynamic-storage /helm/dynamic-storage
+        helm install storage-nfs-pv /helm/storage-nfs-pv
         SCRIPT
         ansible.vm.provision "shell", inline: $script6, privileged: false
 
-
         $script7 = <<-SCRIPT
-        ansible-playbook /playbooks/roles/k8s-master-addon.yml --limit "k8s-master"
+        helm install dynamic-storage /helm/storage-s3-pv
         SCRIPT
         ansible.vm.provision "shell", inline: $script7, privileged: false
 
-  
+        $script8 = <<-SCRIPT
+        ansible-playbook /playbooks/roles/k8s-components.yml --limit "k8s-master"
+        SCRIPT
+        ansible.vm.provision "shell", inline: $script8, privileged: false
+
 
     end
 
