@@ -220,10 +220,17 @@ Vagrant.configure("2") do |config|
         SCRIPT
         ansible.vm.provision "shell", inline: $script4, privileged: false
 
+        $script9 = <<-SCRIPT
+        ansible-playbook /playbooks/roles/k8s-components.yml --limit "ansible"
+        SCRIPT
+        ansible.vm.provision "shell", inline: $script9, privileged: false
+
+
         $script5 = <<-SCRIPT
         helm install pv-local /helm/local-pv
         SCRIPT
         ansible.vm.provision "shell", inline: $script5, privileged: false
+
 
         $script8 = <<-SCRIPT
         kubectl create namespace metallb-system
@@ -240,10 +247,7 @@ Vagrant.configure("2") do |config|
         SCRIPT
         ansible.vm.provision "shell", inline: $script6, privileged: false
 
-        $script9 = <<-SCRIPT
-        ansible-playbook /playbooks/roles/ansible-k8s.yml --limit "ansible"
-        SCRIPT
-        ansible.vm.provision "shell", inline: $script9, privileged: false
+  
 
 
     end
