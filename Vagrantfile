@@ -231,7 +231,7 @@ Vagrant.configure("2") do |config|
         ansible.vm.provision "shell", inline: $script6, privileged: false
 
         $script7 = <<-SCRIPT
-        helm install storage-s3-pv /helm/storage-s3-pv
+        helm install storage-s3-pv /helm/storage-minio-pv
         SCRIPT
         ansible.vm.provision "shell", inline: $script7, privileged: false
 
