@@ -11,7 +11,7 @@ spec:
   accessModes:
     - ReadWriteOnce
     - ReadOnlyMany
-  storageClassName: nfs-pv1
+  storageClassName: nfs-storageclass
   nfs:
-    path: "/srv/nfs/kubetesting/storage"
+    path: "/srv/nfs/kubedata/volume1"
     server: 192.168.50.100

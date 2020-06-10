@@ -6,7 +6,7 @@ metadata:
     tier: storage
     app: app-storage
 spec:
-  storageClassName: nfs-pv1
+  storageClassName: nfs-storageclass
   volumeMode: Filesystem
   accessModes:
     - ReadWriteOnce
