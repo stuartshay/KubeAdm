@@ -1,12 +1,23 @@
 #!/bin/bash
 
-# update apt source
+# Update hosts file
+echo "[TASK 1] Update /etc/hosts file"
+cat >>/etc/hosts<<EOF
+192.168.50.100 nfs-server.example.com nfs-server
+192.168.50.10 k8s-master
+192.168.50.11 k8s-node-1
+192.168.50.12 k8s-node-2
+192.168.50.13 k8s-node-3
+192.168.50.5  ansible 
+EOF
+
+# Update apt source
 sudo -s -- <<EOF
 apt-get update
 apt-get upgrade -y
 EOF
 
-# install Dependencies
+# Install Dependencies
 sudo apt-get install -y apt-transport-https ca-certificates curl
 
 # Install NFS Client

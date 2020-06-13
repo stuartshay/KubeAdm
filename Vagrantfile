@@ -98,16 +98,20 @@ Vagrant.configure("2") do |config|
       nfs.vm.box = IMAGE_NAME
       nfs.vm.hostname = "nfs-server.example.com"
       nfs.vm.network "private_network", ip: "192.168.50.100"
+      
       nfs.vm.synced_folder "nfs-share/", "/srv/nfs/kubedata"
       nfs.vm.synced_folder "provision/docker/", "/docker"
-
+      nfs.vm.synced_folder "playbooks/", "/playbooks"
+      
       nfs.vm.provider "virtualbox" do |n|
         n.name = "nfs-server"
         n.memory = 512
         n.cpus = 1
       end
+
+      nfs.vm.provision "shell", path: "provision/base-provision.sh", privileged: true
       nfs.vm.provision "shell",path: "provision/nfs-provision.sh"
-      nfs.vm.synced_folder "playbooks/", "/playbooks"
+     
       nfs.vm.provision "shell" do |s|
         ssh_prv_key = ""
         ssh_pub_key = ""
@@ -143,6 +147,8 @@ Vagrant.configure("2") do |config|
         ansible.vm.box = IMAGE_NAME
         ansible.vm.network "private_network", ip: "192.168.50.5"
         ansible.vm.hostname = "ansible"
+
+        ansible.vm.provision "shell", path: "provision/base-provision.sh", privileged: true
         ansible.vm.provision  :shell, path: "provision/ansible-install.sh"
         ansible.vm.provision  :shell, inline: "cp /vagrant/ansible.cfg /etc/ansible/ansible.cfg"
         ansible.vm.provision  :shell, inline: "cp /vagrant/hosts /etc/ansible/hosts"
@@ -150,12 +156,14 @@ Vagrant.configure("2") do |config|
         ansible.vm.synced_folder "playbooks/", "/playbooks"
         ansible.vm.synced_folder "provision/helm", "/helm"
         ansible.vm.synced_folder "kube-config/", "/kube-config"
+
+        ansible.vm.provider "virtualbox" do |vmvm|
+          vmvm.memory = 512
+        end
+
         ansible.trigger.after :up do |trigger|
           trigger.warn = "Starting minio containers"
           trigger.run_remote = {inline: "ansible-playbook /playbooks/roles/nfs-minio-autostart.yml --limit nfs-server" ,privileged: false}
-        end
-        ansible.vm.provider "virtualbox" do |vmvm|
-          vmvm.memory = 512
         end
 
         ansible.vm.provision "shell" do |s|
@@ -184,6 +192,7 @@ Vagrant.configure("2") do |config|
               exit 0
             SHELL
           end
+          
         $script0 = <<-SCRIPT
         ansible-playbook /playbooks/roles/k8s-master.yml  --extra-vars "node_ip=192.168.50.10"
         SCRIPT
