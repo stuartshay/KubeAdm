@@ -99,7 +99,7 @@ Vagrant.configure("2") do |config|
       nfs.vm.hostname = "nfs-server.example.com"
       nfs.vm.network "private_network", ip: "192.168.50.100"
       
-      nfs.vm.synced_folder "nfs-share/", "/srv/nfs/kubedata"
+      #nfs.vm.synced_folder "nfs-share/", "/srv/nfs/kubedata", type: "nfs"
       nfs.vm.synced_folder "provision/docker/", "/docker"
       nfs.vm.synced_folder "playbooks/", "/playbooks"
       
