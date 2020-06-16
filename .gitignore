@@ -3,6 +3,7 @@
 tokens
 volumes
 .vs
+.vscode
 
 join-command
 kube-config/config

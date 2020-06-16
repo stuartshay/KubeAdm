@@ -1,4 +1,4 @@
 ---
 
-    - name: Restarting minio containers
-      shell: docker-compose -f /docker/minio/docker-compose.yaml up -d
+    - name: docker swarm deploy minio containers
+      shell: docker stack deploy --compose-file /docker/minio/docker-compose.yaml minio
