@@ -20,7 +20,7 @@ https://kubernetes.io/blog/2019/03/15/kubernetes-setup-using-ansible-and-vagrant
 VirtualBox v6.1  
 https://www.virtualbox.org/wiki/Downloads
 
-Vagrant 2.2.9 
+Vagrant 2.2.9    
 https://www.vagrantup.com/downloads.html
 
 ### Check Local SSH Keys
