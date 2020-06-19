@@ -23,7 +23,7 @@ spec:
               mountPath: /persistentvolumes
           env:
             - name: PROVISIONER_NAME # do not change
-              value: minio-provisioner  # SAME AS PROVISONER NAME VALUE IN STORAGECLASS
+              value: dynamic-provisioner  # SAME AS PROVISONER NAME VALUE IN STORAGECLASS
             - name: NFS_SERVER # do not change
               value: 192.168.50.100 # Ip of the NFS SERVER
             - name: NFS_PATH # do not change
