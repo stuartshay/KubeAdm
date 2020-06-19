@@ -1,0 +1,29 @@
+version: '3.7'
+
+services:
+  visualizer:
+    image: dockersamples/visualizer:stable
+    ports:
+      - 8080:8080
+    networks:
+      - prod
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    deploy:
+      mode: replicated
+      replicas: 1
+      placement:
+        constraints:
+          - node.role == manager
+      resources:
+        reservations:
+          cpus: '0.1'
+          memory: 256M
+        limits:
+          cpus: '0.4'
+          memory: 256M
+
+networks:
+  prod:
+    external:
+      name: prod_net
