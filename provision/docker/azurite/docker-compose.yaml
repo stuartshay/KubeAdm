@@ -1,12 +1,11 @@
 version: '3.7'
 
 services:
-  visualizer:
-    image: dockersamples/visualizer:stable
+  azurite:
+    image: mcr.microsoft.com/azure-storage/azurite
     ports:
-      - 8080:8080
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
+      - 10000:10000
+      - 10001:10001
     deploy:
       mode: replicated
       replicas: 1
