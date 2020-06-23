@@ -1,8 +1,6 @@
-# storage-nfs-pv
+# storageclass-nfs
 
 NFS Persistent Volumes for K8s
-
-## nfs-storageclass 
 
 | Persistent Volume    | Storage     | Server          | Path                |
 | ---------------------|:------------|:----------------|:--------------------|
