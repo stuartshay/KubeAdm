@@ -235,12 +235,12 @@ Vagrant.configure("2") do |config|
         ansible.vm.provision "shell", inline: $script5, privileged: false
 
         $script6 = <<-SCRIPT
-        helm install storage-nfs-pv /helm/storage-nfs-pv
+        helm install storageclass-nfs /helm/storageclass-nfs
         SCRIPT
         ansible.vm.provision "shell", inline: $script6, privileged: false
 
         $script7 = <<-SCRIPT
-        helm install storage-nfs-dynamic /helm/storage-nfs-dynamic
+        helm install storageclass-nfs-dynamic /helm/storageclass-nfs-dynamic
         SCRIPT
         ansible.vm.provision "shell", inline: $script7, privileged: false
 
