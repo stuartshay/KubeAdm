@@ -4,4 +4,4 @@
       roles:
         - healthcheck
         - metallb
-        - dashboard
+        

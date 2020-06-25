@@ -98,11 +98,11 @@ Vagrant.configure("2") do |config|
       nfs.vm.box = IMAGE_NAME
       nfs.vm.hostname = "nfs-server.example.com"
       nfs.vm.network "private_network", ip: "192.168.50.100"
-      
+
       #nfs.vm.synced_folder "nfs-share/", "/srv/nfs/kubedata", type: "nfs"
       nfs.vm.synced_folder "provision/docker/", "/docker"
       nfs.vm.synced_folder "playbooks/", "/playbooks"
-      
+
       nfs.vm.provider "virtualbox" do |n|
         n.name = "nfs-server"
         n.memory = 512
@@ -111,7 +111,7 @@ Vagrant.configure("2") do |config|
 
       nfs.vm.provision "shell", path: "provision/base-provision.sh", privileged: true
       nfs.vm.provision "shell",path: "provision/nfs-provision.sh"
-     
+
       nfs.vm.provision "shell" do |s|
         ssh_prv_key = ""
         ssh_pub_key = ""
@@ -192,7 +192,7 @@ Vagrant.configure("2") do |config|
               exit 0
             SHELL
           end
-          
+
         $script0 = <<-SCRIPT
         ansible-playbook /playbooks/roles/k8s-master.yml  --extra-vars "node_ip=192.168.50.10"
         SCRIPT
@@ -249,6 +249,15 @@ Vagrant.configure("2") do |config|
         SCRIPT
         ansible.vm.provision "shell", inline: $script8, privileged: false
 
+        $script9 = <<-SCRIPT
+        helm install kubernetes-dashboard /helm/kubernetes-dashboard
+        SCRIPT
+        ansible.vm.provision "shell", inline: $script9, privileged: false
+
+        $script10 = <<-SCRIPT
+        ansible-playbook /playbooks/roles/token.yml --limit "ansible"
+        SCRIPT
+        ansible.vm.provision "shell", inline: $script10, privileged: false
 
     end
 

@@ -1,0 +1,12 @@
+---
+- name: Delete already created token.txt file
+  file:
+    path: /kube-config/token.txt
+    state: absent
+
+- name: Get token to access dashboard 
+  shell:  kubectl get secret -n kubernetes-dashboard $(kubectl get serviceaccount kubernetes-dashboard -n kubernetes-dashboard -o jsonpath="{.secrets[0].name}") -o jsonpath="{.data.token}" | base64 --decode >> token.txt   
+  args:
+    chdir: /kube-config/
+  become_user: vagrant
+
