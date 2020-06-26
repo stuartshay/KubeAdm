@@ -235,19 +235,16 @@ Vagrant.configure("2") do |config|
         ansible.vm.provision "shell", inline: $script5, privileged: false
 
         $script6 = <<-SCRIPT
-        helm install storageclass-nfs /helm/storageclass-nfs
+        ansible-playbook /playbooks/roles/k8s-storage.yml --limit "ansible"
         SCRIPT
         ansible.vm.provision "shell", inline: $script6, privileged: false
 
         $script7 = <<-SCRIPT
-        helm install storageclass-nfs-dynamic /helm/storageclass-nfs-dynamic
+        ansible-playbook /playbooks/roles/k8s-components.yml --limit "k8s-master"
         SCRIPT
         ansible.vm.provision "shell", inline: $script7, privileged: false
 
-        $script8 = <<-SCRIPT
-        ansible-playbook /playbooks/roles/k8s-components.yml --limit "k8s-master"
-        SCRIPT
-        ansible.vm.provision "shell", inline: $script8, privileged: false
+        # TODO Move Below to k8s-components.yml 
 
         $script9 = <<-SCRIPT
         helm install kubernetes-dashboard /helm/kubernetes-dashboard

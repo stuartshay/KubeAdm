@@ -1,0 +1,8 @@
+---
+
+    - name: Helm Install - NFS Storage
+      shell:  helm install storageclass-nfs /helm/storageclass-nfs
+
+    - name: Helm Install - NFS Storage - Dynamic
+      shell:  helm install storageclass-nfs-dynamic /helm/storageclass-nfs-dynamic
+
