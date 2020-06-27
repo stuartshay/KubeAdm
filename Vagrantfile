@@ -254,7 +254,7 @@ Vagrant.configure("2") do |config|
         $script10 = <<-SCRIPT
         ansible-playbook /playbooks/roles/token.yml --limit "ansible"
         SCRIPT
-        ansible.vm.provision "shell", inline: $script10, privileged: false
+        ansible.vm.provision "shell", inline: $script10, privileged: false       
 
     end
 
