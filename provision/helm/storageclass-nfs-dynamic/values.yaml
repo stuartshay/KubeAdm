@@ -5,14 +5,19 @@
 replicaCount: 1
 
 image:
-  repository: nginx
+  repository: quay.io/external_storage/nfs-client-provisioner
+  tag: latest
   pullPolicy: IfNotPresent
-  # Overrides the image tag whose default is the chart appVersion.
-  tag: ""
+ 
+
+nfs:
+  # Ip of the NFS SERVER
+  server: 192.168.50.100
+  # path to nfs directory setup
+  path: /srv/nfs/kubetesting/storageclass-data
+  mountOptions:
 
 imagePullSecrets: []
-nameOverride: ""
-fullnameOverride: ""
 
 serviceAccount:
   # Specifies whether a service account should be created
@@ -23,10 +28,28 @@ serviceAccount:
   # If not set and create is true, a name is generated using the fullname template
   name: ""
 
-podAnnotations: {}
+service:
+  type: ClusterIP
+  port: 80
+
+# For creating the StorageClass automatically:
+storageClass:
+  create: true
+
+  # Set a provisioner name. If unset, a name will be generated.
+  # provisionerName:
+  name: storageclass-nfs-dynamic
+
+## For RBAC support:
+rbac:
+  # Specifies whether RBAC resources should be created
+  create: true
 
 podSecurityContext: {}
   # fsGroup: 2000
+
+# upgrade strategy type (e.g. Recreate or RollingUpdate)
+strategyType: Recreate
 
 securityContext: {}
   # capabilities:
@@ -36,22 +59,10 @@ securityContext: {}
   # runAsNonRoot: true
   # runAsUser: 1000
 
-service:
-  type: ClusterIP
-  port: 80
+provisioner: dynamic-provisioner
 
-ingress:
-  enabled: false
-  annotations: {}
-    # kubernetes.io/ingress.class: nginx
-    # kubernetes.io/tls-acme: "true"
-  hosts:
-    - host: chart-example.local
-      paths: []
-  tls: []
-  #  - secretName: chart-example-tls
-  #    hosts:
-  #      - chart-example.local
+# When set to false your PVs will not be archived by the provisioner upon deletion of the PVC.
+# archiveOnDelete: "false"
 
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious
@@ -63,14 +74,6 @@ resources: {}
   # requests:
   #   cpu: 100m
   #   memory: 128Mi
-
-autoscaling:
-  enabled: false
-  minReplicas: 1
-  maxReplicas: 100
-  targetCPUUtilizationPercentage: 80
-  # targetMemoryUtilizationPercentage: 80
-
 nodeSelector: {}
 
 tolerations: []
