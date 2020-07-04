@@ -23,6 +23,8 @@ spec:
           volumeMounts:
             - name: nfs-provisioner-v
               mountPath: /persistentvolumes
+       #     - name: nfs-provisioner-v1
+        #      mountPath: /persistentvolumes1
           env:
             - name: PROVISIONER_NAME # do not change
               value: {{ .Values.provisioner }}  # SAME AS PROVISONER NAME VALUE IN STORAGECLASS
@@ -30,8 +32,14 @@ spec:
               value: {{ .Values.nfs.server }} # Ip of the NFS SERVER
             - name: NFS_PATH # do not change
               value: {{ .Values.nfs.path }} # path to nfs directory setup
+#            - name: NFS_PATH2 # do not change
+ #             value: {{ .Values.nfs.path2 }}
       volumes:
        - name: nfs-provisioner-v # same as volumemouts name
          nfs:
            server: {{ .Values.nfs.server }}
            path: {{ .Values.nfs.path }}
+   #    - name: nfs-provisioner-v1 # same as volumemouts name
+  #       nfs:
+    #       server: {{ .Values.nfs.server }}
+     #      path: {{ .Values.nfs.path2 }}

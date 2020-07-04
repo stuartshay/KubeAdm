@@ -3,6 +3,10 @@ apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:
   name: {{ .Values.storageClass.name }} # IMPORTANT pvc needs to mention this name
+{{- if .Values.storageClass.defaultClass }}
+  annotations:
+    storageclass.kubernetes.io/is-default-class: "true"
+{{- end }}
 provisioner: {{ .Values.provisioner }} # name can be anything
 parameters:
   archiveOnDelete: "false"
