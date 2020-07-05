@@ -4,6 +4,5 @@
         - healthcheck
         - metallb
         - dashboard
-        - dashboard-open
-
+        - dashboard-token
         

@@ -11,6 +11,9 @@ cat >>/etc/hosts<<EOF
 192.168.50.5  ansible 
 EOF
 
+# apt-cacher-ng
+#echo Acquire::http::Proxy \"http://192.168.33.10:3142\"\; | sudo tee /etc/apt/apt.conf.d/00proxy
+
 # Update apt source
 sudo -s -- <<EOF
 apt-get update
