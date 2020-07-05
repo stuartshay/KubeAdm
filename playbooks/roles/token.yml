@@ -2,4 +2,4 @@
     - hosts: ansible
       become: true
       roles:
-        - dashboard-open
+        - dashboard-token

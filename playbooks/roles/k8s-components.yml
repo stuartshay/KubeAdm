@@ -1,7 +1,9 @@
 ---
-    - hosts: master
-      become: true
+    - hosts: ansible
       roles:
         - healthcheck
         - metallb
+        - dashboard
+        - dashboard-open
+
         
