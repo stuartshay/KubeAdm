@@ -9,13 +9,9 @@ image:
   tag: latest
   pullPolicy: IfNotPresent
  
-
 nfs:
-  # Ip of the NFS SERVER
   server: 192.168.50.100
-  # path to nfs directory setup
   path: /srv/nfs/kubetesting/storageclass-data
-  #  path2: /srv/nfs/kubetesting/storageclass-data2
   mountOptions:
 
 imagePullSecrets: []

@@ -7,14 +7,7 @@ mkdir -p /srv/nfs/kubedata
 mkdir -p /srv/nfs/kubedata/volume1
 mkdir -p /srv/nfs/kubedata/volume2
 
-# Ignore for now
-mkdir -p /srv/nfs/kubedata/db
-mkdir -p /srv/nfs/kubedata/storage
-mkdir -p /srv/nfs/kubedata/logs
-
 mkdir -p /srv/nfs/kubetesting
-mkdir -p /srv/nfs/kubetesting/bitnami-wordpress
-mkdir -p /srv/nfs/kubetesting/storage
 mkdir -p /srv/nfs/kubetesting/storageclass-data
 mkdir -p /srv/nfs/kubetesting/storageclass-data2
 mkdir -p /srv/nfs/kubetesting/storageclass-data3
@@ -30,17 +23,8 @@ sudo chmod 777 /srv/nfs/kubedata/volume1
 sudo chown -R nobody:nogroup /srv/nfs/kubedata/volume2
 sudo chmod 777 /srv/nfs/kubedata/volume2
 
-
-# Ignore for now
-
 sudo chown -R nobody:nogroup /srv/nfs/kubetesting
 sudo chmod 777 /srv/nfs/kubetesting
-
-sudo chown -R nobody:nogroup /srv/nfs/kubetesting/bitnami-wordpress
-sudo chmod 777 /srv/nfs/kubetesting/bitnami-wordpress
-
-sudo chown -R nobody:nogroup /srv/nfs/kubetesting/storage
-sudo chmod 777 /srv/nfs/kubetesting/storage
 
 sudo chown -R nobody:nogroup /srv/nfs/kubetesting/storageclass-data
 sudo chmod 777 /srv/nfs/kubetesting/storageclass-data
@@ -61,9 +45,6 @@ cat >>/etc/exports<<EOF
 /srv/nfs/kubedata    *(rw,sync,no_subtree_check,no_root_squash)
 /srv/nfs/kubedata/volume1  *(rw,sync,no_subtree_check,no_root_squash)
 /srv/nfs/kubedata/volume2  *(rw,sync,no_subtree_check,no_root_squash)
-/srv/nfs/kubetesting    *(rw,sync,no_subtree_check,no_root_squash)
-/srv/nfs/kubetesting/bitnami-wordpress    *(rw,sync,no_subtree_check,no_root_squash)
-/srv/nfs/kubetesting/storage   *(rw,sync,no_subtree_check,no_root_squash)
 /srv/nfs/kubetesting/storageclass-data   *(rw,sync,no_subtree_check,no_root_squash)
 /srv/nfs/kubetesting/storageclass-data2   *(rw,sync,no_subtree_check,no_root_squash)
 /srv/nfs/kubetesting/storageclass-data3   *(rw,sync,no_subtree_check,no_root_squash)

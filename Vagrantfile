@@ -240,21 +240,9 @@ Vagrant.configure("2") do |config|
         ansible.vm.provision "shell", inline: $script6, privileged: false
 
         $script7 = <<-SCRIPT
-        ansible-playbook /playbooks/roles/k8s-components.yml --limit "k8s-master"
+        ansible-playbook /playbooks/roles/k8s-components.yml --limit "ansible"
         SCRIPT
         ansible.vm.provision "shell", inline: $script7, privileged: false
-
-        # TODO Move Below to k8s-components.yml 
-
-        $script9 = <<-SCRIPT
-        helm install kubernetes-dashboard /helm/kubernetes-dashboard
-        SCRIPT
-        ansible.vm.provision "shell", inline: $script9, privileged: false
-
-        $script10 = <<-SCRIPT
-        ansible-playbook /playbooks/roles/token.yml --limit "ansible"
-        SCRIPT
-        ansible.vm.provision "shell", inline: $script10, privileged: false       
 
     end
 

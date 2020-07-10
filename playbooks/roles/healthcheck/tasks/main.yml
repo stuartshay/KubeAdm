@@ -1,5 +1,6 @@
 ---
 - name: "Create tmp directory"
+  become: true
   file:
     path: "{{ tmp_dir }}"
     state: directory
@@ -7,6 +8,7 @@
   tags: healthcheck
 
 - name: "Create checkout directory"
+  become: true
   file:
     path: "{{ tmp_dir }}/healthcheck"
     state: directory
@@ -14,6 +16,7 @@
   tags: healthcheck
 
 - name: "Clone git repo"
+  become: true
   git:
     repo: "{{ healthcheck_git_url }}"
     dest: "{{ tmp_dir }}/healthcheck"
@@ -27,6 +30,7 @@
   tags: healthcheck
 
 - name: "Clean-up"
+  become: true
   file:
     path: "{{ tmp_dir }}"
     state: absent
