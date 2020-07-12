@@ -1,8 +1,9 @@
 ---
+    - name: docker swarm deploy visualizer containers
+      shell: docker stack deploy --compose-file /docker/visualizer/docker-compose.yaml visualizer
 
     - name: docker swarm deploy azurite containers
       shell: docker stack deploy --compose-file /docker/azurite/docker-compose.yaml azurite
 
-    
     - name: docker swarm deploy minio containers
       shell: docker stack deploy --compose-file /docker/minio/docker-compose.yaml minio

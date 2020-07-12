@@ -163,7 +163,7 @@ Vagrant.configure("2") do |config|
 
         ansible.trigger.after :up do |trigger|
           trigger.warn = "Starting minio containers"
-          trigger.run_remote = {inline: "ansible-playbook /playbooks/roles/nfs-minio-autostart.yml --limit nfs-server" ,privileged: false}
+          trigger.run_remote = {inline: "ansible-playbook /playbooks/roles/nfs-swarm-deploy.yml --limit nfs-server" ,privileged: false}
         end
 
         ansible.vm.provision "shell" do |s|

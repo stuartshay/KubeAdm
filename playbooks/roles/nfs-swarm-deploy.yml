@@ -2,4 +2,4 @@
     - hosts: nfs
       become: true
       roles:
-        - minio-autostart
+        - docker-swarm-deploy
