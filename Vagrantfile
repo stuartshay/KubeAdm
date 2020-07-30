@@ -200,8 +200,8 @@ Vagrant.configure("2") do |config|
         ansible.vm.network "private_network", ip: "192.168.50.5"
         ansible.vm.hostname = "ansible"
 
-#        ansible.vm.provision "shell", path: "provision/base-provision.sh", privileged: true
-#        ansible.vm.provision  :shell, path: "provision/ansible-install.sh"
+        ansible.vm.provision "shell", path: "provision/base-provision.sh", privileged: true
+        ansible.vm.provision  :shell, path: "provision/ansible-install.sh"
         ansible.vm.provision  :shell, inline: "cp /vagrant/ansible.cfg /etc/ansible/ansible.cfg"
         ansible.vm.provision  :shell, inline: "cp /vagrant/hosts /etc/ansible/hosts"
 
@@ -244,7 +244,7 @@ Vagrant.configure("2") do |config|
               exit 0
             SHELL
           end
-=begin
+
         $script0 = <<-SCRIPT
         ansible-playbook /playbooks/roles/k8s-master.yml  --extra-vars "node_ip=192.168.50.10"
         SCRIPT
@@ -276,42 +276,32 @@ Vagrant.configure("2") do |config|
         SCRIPT
         ansible.vm.provision "shell", inline: $script3, privileged: false
 
-        $script14 = <<-SCRIPT
-        ansible-playbook /playbooks/roles/nginx.yml --limit "nginx-server"
-        SCRIPT
-        ansible.vm.provision "shell", inline: $script14, privileged: false
-
-        $script15 = <<-SCRIPT
-        ansible-playbook /playbooks/roles/cert.yml --limit "nginx-server"
-        SCRIPT
-        ansible.vm.provision "shell", inline: $script15, privileged: false
-=end
-        $script14 = <<-SCRIPT
-        ansible-playbook /playbooks/roles/nginx.yml --limit "nginx-server"
-        SCRIPT
-        ansible.vm.provision "shell", inline: $script14, privileged: false
-
-=begin
         $script4 = <<-SCRIPT
-        ansible-playbook /playbooks/roles/ansible.yml --limit "ansible"
+        ansible-playbook /playbooks/roles/nginx.yml --limit "nginx-server"
         SCRIPT
         ansible.vm.provision "shell", inline: $script4, privileged: false
 
+
         $script5 = <<-SCRIPT
-        ansible-playbook /playbooks/roles/k8s-configuration.yml --limit "ansible"
+        ansible-playbook /playbooks/roles/ansible.yml --limit "ansible"
         SCRIPT
         ansible.vm.provision "shell", inline: $script5, privileged: false
 
         $script6 = <<-SCRIPT
-        ansible-playbook /playbooks/roles/k8s-storage.yml --limit "ansible"
+        ansible-playbook /playbooks/roles/k8s-configuration.yml --limit "ansible"
         SCRIPT
         ansible.vm.provision "shell", inline: $script6, privileged: false
 
         $script7 = <<-SCRIPT
-        ansible-playbook /playbooks/roles/k8s-components.yml --limit "ansible"
+        ansible-playbook /playbooks/roles/k8s-storage.yml --limit "ansible"
         SCRIPT
         ansible.vm.provision "shell", inline: $script7, privileged: false
-=end
+
+        $script8 = <<-SCRIPT
+        ansible-playbook /playbooks/roles/k8s-components.yml --limit "ansible"
+        SCRIPT
+        ansible.vm.provision "shell", inline: $script8, privileged: false
+
     end
 
 
