@@ -1,5 +1,10 @@
 [ubuntu]
 ansible
+nginx-server-1
+nginx-server-2
+nginx-server-3
+nginx-server-4
+nginx-server-5
 nfs-server
 k8s-master
 k8s-node-1
@@ -20,6 +25,13 @@ k8s-node-1
 k8s-node-2
 k8s-node-3
 
+[nginx-server]
+nginx-server-1
+nginx-server-2
+nginx-server-3
+nginx-server-4
+nginx-server-5
+
 [nfs]
 nfs-server
 
@@ -32,6 +44,11 @@ k8s-node-1 ansible_host=192.168.50.11
 k8s-node-2 ansible_host=192.168.50.12
 k8s-node-3 ansible_host=192.168.50.13
 nfs-server ansible_host=192.168.50.100
+nginx-server-1 ansible_host=192.168.50.101
+nginx-server-2 ansible_host=192.168.50.102
+nginx-server-3 ansible_host=192.168.50.103
+nginx-server-4 ansible_host=192.168.50.104
+nginx-server-5 ansible_host=192.168.50.105
 
 
 [all:vars]

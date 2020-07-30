@@ -4,6 +4,11 @@
 echo "[TASK 1] Update /etc/hosts file"
 cat >>/etc/hosts<<EOF
 192.168.50.100 nfs-server.example.com nfs-server
+192.168.50.101 nginx-server-1
+192.168.50.102 nginx-server-2
+192.168.50.103 nginx-server-3
+192.168.50.104 nginx-server-4
+192.168.50.105 nginx-server-5
 192.168.50.10 k8s-master
 192.168.50.11 k8s-node-1
 192.168.50.12 k8s-node-2

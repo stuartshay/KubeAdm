@@ -94,6 +94,58 @@ Vagrant.configure("2") do |config|
         end
     end
 
+    config.vm.define "nginx-server" do |nginx|
+      nginx.vm.box = IMAGE_NAME
+      nginx.vm.hostname = "nginx-server-1"
+      nginx.vm.network "private_network", ip: "192.168.50.101"
+      nginx.vm.hostname = "nginx-server-2"
+      nginx.vm.network "private_network", ip: "192.168.50.102"
+      nginx.vm.hostname = "nginx-server-3"      
+      nginx.vm.network "private_network", ip: "192.168.50.103"
+      nginx.vm.hostname = "nginx-server-4"
+      nginx.vm.network "private_network", ip: "192.168.50.104"
+      nginx.vm.hostname = "nginx-server-5"
+      nginx.vm.network "private_network", ip: "192.168.50.105"
+
+      nginx.vm.synced_folder "provision/docker/", "/docker"
+      nginx.vm.synced_folder "playbooks/", "/playbooks"
+
+      nginx.vm.provider "virtualbox" do |ng|
+        ng.name = "nginx-server"
+        ng.memory = 512
+        ng.cpus = 1
+      end
+      nginx.vm.provision "shell", path: "provision/base-provision.sh", privileged: true
+      
+      nginx.vm.provision "shell" do |s|
+        ssh_prv_key = ""
+        ssh_pub_key = ""
+        if File.file?("#{Dir.home}/.ssh/id_rsa")
+            ssh_prv_key = File.read("#{Dir.home}/.ssh/id_rsa")
+            ssh_pub_key = File.readlines("#{Dir.home}/.ssh/id_rsa.pub").first.strip
+        else
+            puts "No SSH key found. You will need to remedy this before pushing to the repository."
+        end
+        s.inline = <<-SHELL
+
+        if grep -sq "#{ssh_pub_key}" /home/vagrant/.ssh/authorized_keys; then
+            echo "SSH keys already provisioned."
+            exit 0;
+        fi
+            echo "SSH key provisioning."
+            mkdir -p /home/vagrant/.ssh/
+            touch /home/vagrant/.ssh/authorized_keys
+            echo #{ssh_pub_key} >> /home/vagrant/.ssh/authorized_keys
+            echo #{ssh_pub_key} > /home/vagrant/.ssh/id_rsa.pub
+            chmod 644 /home/vagrant/.ssh/id_rsa.pub
+            echo "#{ssh_prv_key}" > /home/vagrant/.ssh/id_rsa
+            chmod 600 /home/vagrant/.ssh/id_rsa
+            chown -R vagrant:vagrant /home/vagrant
+            exit 0
+        SHELL
+        end
+      end
+
     config.vm.define "nfs-server" do |nfs|
       nfs.vm.box = IMAGE_NAME
       nfs.vm.hostname = "nfs-server.example.com"
@@ -148,8 +200,8 @@ Vagrant.configure("2") do |config|
         ansible.vm.network "private_network", ip: "192.168.50.5"
         ansible.vm.hostname = "ansible"
 
-        ansible.vm.provision "shell", path: "provision/base-provision.sh", privileged: true
-        ansible.vm.provision  :shell, path: "provision/ansible-install.sh"
+#        ansible.vm.provision "shell", path: "provision/base-provision.sh", privileged: true
+#        ansible.vm.provision  :shell, path: "provision/ansible-install.sh"
         ansible.vm.provision  :shell, inline: "cp /vagrant/ansible.cfg /etc/ansible/ansible.cfg"
         ansible.vm.provision  :shell, inline: "cp /vagrant/hosts /etc/ansible/hosts"
 
@@ -192,7 +244,7 @@ Vagrant.configure("2") do |config|
               exit 0
             SHELL
           end
-
+=begin
         $script0 = <<-SCRIPT
         ansible-playbook /playbooks/roles/k8s-master.yml  --extra-vars "node_ip=192.168.50.10"
         SCRIPT
@@ -218,12 +270,28 @@ Vagrant.configure("2") do |config|
         scp vagrant@192.168.50.10://home/vagrant/.kube/config  ../../kube-config/
         SCRIPT
         ansible.vm.provision "shell", inline: $script2, privileged: false
-
+         
         $script3 = <<-SCRIPT
         ansible-playbook /playbooks/roles/nfs.yml --limit "nfs-server"
         SCRIPT
         ansible.vm.provision "shell", inline: $script3, privileged: false
 
+        $script14 = <<-SCRIPT
+        ansible-playbook /playbooks/roles/nginx.yml --limit "nginx-server"
+        SCRIPT
+        ansible.vm.provision "shell", inline: $script14, privileged: false
+
+        $script15 = <<-SCRIPT
+        ansible-playbook /playbooks/roles/cert.yml --limit "nginx-server"
+        SCRIPT
+        ansible.vm.provision "shell", inline: $script15, privileged: false
+=end
+        $script14 = <<-SCRIPT
+        ansible-playbook /playbooks/roles/nginx.yml --limit "nginx-server"
+        SCRIPT
+        ansible.vm.provision "shell", inline: $script14, privileged: false
+
+=begin
         $script4 = <<-SCRIPT
         ansible-playbook /playbooks/roles/ansible.yml --limit "ansible"
         SCRIPT
@@ -243,8 +311,9 @@ Vagrant.configure("2") do |config|
         ansible-playbook /playbooks/roles/k8s-components.yml --limit "ansible"
         SCRIPT
         ansible.vm.provision "shell", inline: $script7, privileged: false
-
+=end
     end
 
 
 end
+

@@ -1,0 +1,13 @@
+version: '2'
+services:
+    reverseproxy:
+        image: nginx:alpine
+        ports:
+            - 80:80
+            - 443:443 
+        restart: always
+        volumes:
+        - ./nginx.conf:/etc/nginx/nginx.conf
+        - ./local.crt:/etc/ssl/certs/local.crt
+        - ./local.key:/etc/ssl/private/local.key
+

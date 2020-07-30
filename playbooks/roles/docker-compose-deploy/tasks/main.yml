@@ -1,0 +1,5 @@
+---
+    - name: docker-compose run nginx containers
+      shell: docker-compose -f /docker/nginx/docker-compose.yaml up -d
+      become_user: vagrant
+      

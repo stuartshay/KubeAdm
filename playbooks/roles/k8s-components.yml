@@ -1,8 +1,8 @@
 ---
     - hosts: ansible
       roles:
-        - healthcheck
+#        - healthcheck
         - metallb
-        - dashboard
-        - dashboard-token
+#        - dashboard
+#        - dashboard-token
         
