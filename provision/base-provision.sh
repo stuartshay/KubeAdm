@@ -21,8 +21,8 @@ EOF
 
 # Update apt source
 sudo -s -- <<EOF
-apt-get update -y
-apt-get upgrade -y
+apt-get update 
+sudo DEBIAN_FRONTEND=noninteractive apt-get upgrade -y 
 EOF
 
 # Install Dependencies

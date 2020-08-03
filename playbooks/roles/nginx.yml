@@ -2,6 +2,6 @@
     - hosts: nginx-server
       become: true
       roles:
-        - docker
+#        - docker
         - docker-compose-deploy
 
