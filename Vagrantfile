@@ -277,7 +277,7 @@ Vagrant.configure("2") do |config|
         ansible.vm.provision "shell", inline: $script3, privileged: false
 
         $script4 = <<-SCRIPT
-        ansible-playbook /playbooks/roles/nginx.yml --limit "nginx-server"
+        ansible-playbook /playbooks/roles/nginx.yml --extra-vars "node_ip=192.168.50.101"
         SCRIPT
         ansible.vm.provision "shell", inline: $script4, privileged: false
 
@@ -301,6 +301,7 @@ Vagrant.configure("2") do |config|
         ansible-playbook /playbooks/roles/k8s-components.yml --limit "ansible"
         SCRIPT
         ansible.vm.provision "shell", inline: $script8, privileged: false
+
 
     end
 
