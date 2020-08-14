@@ -1,0 +1,30 @@
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: k8s-ingress
+  annotations:
+    kubernetes.io/ingress.class: nginx
+spec:
+  rules:
+  - host: {{ .Values.ingress_rules.mailhog.host }}
+    http:
+      paths:
+      - backend:
+          serviceName: {{ .Values.ingress_rules.mailhog.serviceName }}
+          servicePort: {{ .Values.ingress_rules.mailhog.servicePort }}
+
+
+  - host: {{ .Values.ingress_rules.grafana.host }}
+    http:
+      paths:
+      - backend:
+          serviceName: {{ .Values.ingress_rules.grafana.serviceName }}
+          servicePort: {{ .Values.ingress_rules.grafana.servicePort }}
+
+
+  - host: {{ .Values.ingress_rules.wordpress.host }}
+    http:
+      paths:
+      - backend:
+          serviceName: {{ .Values.ingress_rules.wordpress.serviceName }}
+          servicePort: {{ .Values.ingress_rules.wordpress.servicePort }}

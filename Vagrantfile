@@ -100,7 +100,7 @@ Vagrant.configure("2") do |config|
       nginx.vm.network "private_network", ip: "192.168.50.101"
       nginx.vm.hostname = "nginx-server-2"
       nginx.vm.network "private_network", ip: "192.168.50.102"
-      nginx.vm.hostname = "nginx-server-3"      
+      nginx.vm.hostname = "nginx-server-3"
       nginx.vm.network "private_network", ip: "192.168.50.103"
       nginx.vm.hostname = "nginx-server-4"
       nginx.vm.network "private_network", ip: "192.168.50.104"
@@ -116,7 +116,7 @@ Vagrant.configure("2") do |config|
         ng.cpus = 1
       end
       nginx.vm.provision "shell", path: "provision/base-provision.sh", privileged: true
-      
+
       nginx.vm.provision "shell" do |s|
         ssh_prv_key = ""
         ssh_pub_key = ""
@@ -270,7 +270,7 @@ Vagrant.configure("2") do |config|
         scp vagrant@192.168.50.10://home/vagrant/.kube/config  ../../kube-config/
         SCRIPT
         ansible.vm.provision "shell", inline: $script2, privileged: false
-         
+
         $script3 = <<-SCRIPT
         ansible-playbook /playbooks/roles/nfs.yml --limit "nfs-server"
         SCRIPT
@@ -307,4 +307,3 @@ Vagrant.configure("2") do |config|
 
 
 end
-

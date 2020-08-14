@@ -8,3 +8,6 @@
 
     - name: Helm Install - mailhog
       shell:  helm install mailhog /helm/mailhog
+
+    - name: Helm Install - Ingress Controller
+      shell:  helm install ingress /helm/nginx-ingress
