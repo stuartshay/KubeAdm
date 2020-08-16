@@ -106,9 +106,10 @@ Vagrant.configure("2") do |config|
       nginx.vm.network "private_network", ip: "192.168.50.104"
       nginx.vm.hostname = "nginx-server-5"
       nginx.vm.network "private_network", ip: "192.168.50.105"
+      nginx.vm.hostname = "nginx-internal-1"
+      nginx.vm.network "private_network", ip: "192.168.50.200"
 
       nginx.vm.synced_folder "provision/docker/", "/docker"
-      nginx.vm.synced_folder "playbooks/", "/playbooks"
 
       nginx.vm.provider "virtualbox" do |ng|
         ng.name = "nginx-server"
@@ -153,7 +154,7 @@ Vagrant.configure("2") do |config|
 
       #nfs.vm.synced_folder "nfs-share/", "/srv/nfs/kubedata", type: "nfs"
       nfs.vm.synced_folder "provision/docker/", "/docker"
-      nfs.vm.synced_folder "playbooks/", "/playbooks"
+      #nfs.vm.synced_folder "playbooks/", "/playbooks"
 
       nfs.vm.provider "virtualbox" do |n|
         n.name = "nfs-server"

@@ -14,6 +14,10 @@ https://kubernetes.io/blog/2019/03/15/kubernetes-setup-using-ansible-and-vagrant
 | k8s-node-2     | 192.168.50.12     |Kubernetes Worker Node 2                    |
 | k8s-node-3     | 192.168.50.13     |Kubernetes Worker Node 3                    |
 | nfs-server     | 192.168.50.100    |NFS Server                                  |
+| nginx-server   | 192.168.50.101    |NGNIX Server                                |
+
+
+
 
 ## Prerequisites
 
