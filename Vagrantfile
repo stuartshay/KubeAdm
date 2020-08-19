@@ -244,7 +244,7 @@ Vagrant.configure("2") do |config|
               chown -R vagrant:vagrant /home/vagrant
               exit 0
             SHELL
-          end
+	    end
 
         $script0 = <<-SCRIPT
         ansible-playbook /playbooks/roles/k8s-master.yml  --extra-vars "node_ip=192.168.50.10"
@@ -282,7 +282,6 @@ Vagrant.configure("2") do |config|
         SCRIPT
         ansible.vm.provision "shell", inline: $script4, privileged: false
 
-
         $script5 = <<-SCRIPT
         ansible-playbook /playbooks/roles/ansible.yml --limit "ansible"
         SCRIPT
@@ -304,7 +303,7 @@ Vagrant.configure("2") do |config|
         ansible.vm.provision "shell", inline: $script8, privileged: false
 
 
-    end
+	end
 
 
 end

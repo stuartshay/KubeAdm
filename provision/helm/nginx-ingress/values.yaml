@@ -203,7 +203,8 @@ controller:
   ## Node labels for controller pod assignment
   ## Ref: https://kubernetes.io/docs/user-guide/node-selection/
   ##
-  nodeSelector: {}
+  nodeSelector: {} 
+  #    kubernetes.io/hostname: "nginx-internal-1"
 
   ## Liveness and readiness probe values
   ## Ref: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#container-probes
@@ -454,18 +455,21 @@ revisionHistoryLimit: 10
 #Ingress rules
 ingress_rules:
   mailhog:
-    host: mailhog.loc
+    host: mailhog.local
     serviceName: mailhog
     servicePort: 8025
   wordpress:
-    host: wordpress.loc
+    host: external-1.local
     serviceName: wordpress
     servicePort: 8086
   grafana:
-    host: grafana.loc
+    host: internal-1.local
     serviceName: grafana
     servicePort: 8087
-
+  prom:
+    host: prom.local
+    serviceName: prometheus
+    servicePort: 9090
 
 ## Default 404 backend
 ##
@@ -544,7 +548,8 @@ defaultBackend:
   ## Node labels for default backend pod assignment
   ## Ref: https://kubernetes.io/docs/user-guide/node-selection/
   ##
-  nodeSelector: {}
+  #  nodeSelector: 
+  #    kubernetes.io/hostname: "nginx-internal-1"
 
   ## Annotations to be added to default backend pods
   ##

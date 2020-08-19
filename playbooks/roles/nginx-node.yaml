@@ -1,0 +1,8 @@
+---
+    - hosts: nginx
+      become: true
+      roles:
+        - docker
+        - kubernetes-common  
+        - kubernetes-node
+
