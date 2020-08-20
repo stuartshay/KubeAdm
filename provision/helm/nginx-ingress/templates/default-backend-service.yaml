@@ -14,7 +14,7 @@ metadata:
     component: "{{ .Values.defaultBackend.name }}"
     heritage: {{ .Release.Service }}
     release: {{ template "nginx-ingress.releaseLabel" . }}
-  name: ingress-controller-nginx-backend
+  name: {{ template "nginx-ingress.defaultBackend.fullname" . }}
 spec:
 {{- if not .Values.defaultBackend.service.omitClusterIP }}
   {{- with .Values.defaultBackend.service.clusterIP }}
