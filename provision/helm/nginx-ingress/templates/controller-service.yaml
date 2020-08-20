@@ -17,7 +17,7 @@ metadata:
     component: "{{ .Values.controller.name }}"
     heritage: {{ .Release.Service }}
     release: {{ template "nginx-ingress.releaseLabel" . }}
-  name: {{ template "nginx-ingress.controller.fullname" . }}
+  name: ingress-controller-nginx-service
 spec:
 {{- if not .Values.controller.service.omitClusterIP }}
   {{- with .Values.controller.service.clusterIP }}
