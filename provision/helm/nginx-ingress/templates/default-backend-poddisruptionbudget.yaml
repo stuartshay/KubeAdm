@@ -8,7 +8,7 @@ metadata:
     {{ .Values.defaultBackend.componentLabelKeyOverride | default "app.kubernetes.io/component" }}: default-backend
     heritage: {{ .Release.Service }}
     release: {{ template "nginx-ingress.releaseLabel" . }}
-  name: {{ template "nginx-ingress.defaultBackend.fullname" . }}
+  name: ingress-controller-nginx-backend
 spec:
   selector:
     matchLabels:

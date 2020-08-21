@@ -13,7 +13,7 @@ spec:
   scaleTargetRef:
     apiVersion: {{ template "deployment.apiVersion" . }}
     kind: Deployment
-    name: {{ template "nginx-ingress.defaultBackend.fullname" . }}
+    name: ingress-controller-nginx-backend
   minReplicas: {{ .Values.defaultBackend.autoscaling.minReplicas }}
   maxReplicas: {{ .Values.defaultBackend.autoscaling.maxReplicas }}
   metrics:
