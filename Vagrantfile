@@ -147,15 +147,13 @@ Vagrant.configure("2") do |config|
         end
       end
 
-    config.vm.define "nfs-server" do |nfs|
+    
+      config.vm.define "nfs-server" do |nfs|
       nfs.vm.box = IMAGE_NAME
       nfs.vm.hostname = "nfs-server.example.com"
       nfs.vm.network "private_network", ip: "192.168.50.100"
-
-      #nfs.vm.synced_folder "nfs-share/", "/srv/nfs/kubedata", type: "nfs"
       nfs.vm.synced_folder "provision/docker/", "/docker"
-      #nfs.vm.synced_folder "playbooks/", "/playbooks"
-
+  
       nfs.vm.provider "virtualbox" do |n|
         n.name = "nfs-server"
         n.memory = 512
@@ -216,7 +214,7 @@ Vagrant.configure("2") do |config|
 
         ansible.trigger.after :up do |trigger|
           trigger.warn = "Starting minio containers"
-          trigger.run_remote = {inline: "ansible-playbook /playbooks/roles/minio.yml --limit nfs-server" ,privileged: false}
+          trigger.run_remote = {inline: "ansible-playbook /playbooks/roles/nfs-swarm-deploy.yml --limit nfs-server" ,privileged: false}
         end
 
         ansible.vm.provision "shell" do |s|

@@ -37,6 +37,13 @@ id_rsa.ppk
 id_rsa.pub
 ```
 
+### Add to Local Hosts 
+
+```
+192.168.50.200 internal-1.local
+192.168.50.11 external-1.local
+```
+
 ## Setup
 ```
 vagrant box update
