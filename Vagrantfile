@@ -20,7 +20,10 @@ Vagrant.configure("2") do |config|
         master.vm.box = IMAGE_NAME
         master.vm.network "private_network", ip: "192.168.50.10"
         master.vm.hostname = "k8s-master"
-
+       
+        master.vm.network "private_network", ip: "192.168.50.25"
+        master.vm.hostname = "master-internal-1"
+        
         master.vm.provider "virtualbox" do |vmvm|
           vmvm.memory = 1500
         end
