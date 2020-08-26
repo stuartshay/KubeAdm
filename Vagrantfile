@@ -20,10 +20,10 @@ Vagrant.configure("2") do |config|
         master.vm.box = IMAGE_NAME
         master.vm.network "private_network", ip: "192.168.50.10"
         master.vm.hostname = "k8s-master"
-       
+
         master.vm.network "private_network", ip: "192.168.50.25"
         master.vm.hostname = "master-internal-1"
-        
+
         master.vm.provider "virtualbox" do |vmvm|
           vmvm.memory = 1500
         end
@@ -150,13 +150,13 @@ Vagrant.configure("2") do |config|
         end
       end
 
-    
+
       config.vm.define "nfs-server" do |nfs|
       nfs.vm.box = IMAGE_NAME
       nfs.vm.hostname = "nfs-server.example.com"
       nfs.vm.network "private_network", ip: "192.168.50.100"
       nfs.vm.synced_folder "provision/docker/", "/docker"
-  
+
       nfs.vm.provider "virtualbox" do |n|
         n.name = "nfs-server"
         n.memory = 512
@@ -302,6 +302,8 @@ Vagrant.configure("2") do |config|
         ansible-playbook /playbooks/roles/k8s-components.yml --limit "ansible"
         SCRIPT
         ansible.vm.provision "shell", inline: $script8, privileged: false
+
+
 
 	end
 

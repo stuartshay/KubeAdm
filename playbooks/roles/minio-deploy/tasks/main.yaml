@@ -1,5 +1,5 @@
 ---
 
-  - name: minio-container running
-    shell: docker-compose -f /docker/minio-deploy/docker-compose.yaml up -d
-    become_user: vagrant
+#  - name: minio-container running
+#    shell: docker-compose -f /docker/minio-deploy/docker-compose.yaml up -d
+#    become_user: vagrant

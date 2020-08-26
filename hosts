@@ -27,7 +27,7 @@ nginx-server
 [nfs]
 nfs-server
 
-[ansible]
+[ansiblemachine]
 ansible
 
 ansible ansible_host=192.168.50.5

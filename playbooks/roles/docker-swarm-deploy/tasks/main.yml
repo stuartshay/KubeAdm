@@ -1,9 +1,25 @@
 ---
-    - name: docker swarm deploy visualizer containers
-      shell: docker stack deploy --compose-file /docker/visualizer/docker-compose.yaml visualizer
+    - name: install pip docker
+      shell: pip3 install docker
+#    - name: docker swarm deploy visualizer containers
+#      shell: docker stack deploy --compose-file /docker/visualizer/docker-compose.yaml visualizer
 
-    - name: docker swarm deploy azurite containers
-      shell: docker stack deploy --compose-file /docker/azurite/docker-compose.yaml azurite
+    - name: create minio container via docker
+      docker_container:
+        name: minio-server
+        image: minio/minio
+        command: server /data
+        detach: yes
+        ports:
+         - "9000:9000"
+        env:
+          MINIO_ACCESS_KEY: minio
+          MINIO_SECRET_KEY: minio123
+#    - name: docker swarm deploy visualizer containers
+#      shell: docker stack deploy --compose-file /docker/visualizer/docker-compose.yaml visualizer
 
-    - name: docker swarm deploy minio containers
-      shell: docker stack deploy --compose-file /docker/minio/docker-compose.yaml minio
+#    - name: docker swarm deploy azurite containers
+#      shell: docker stack deploy --compose-file /docker/azurite/docker-compose.yaml azurite
+
+#    - name: docker swarm deploy minio containers
+#      shell: docker stack deploy --compose-file /docker/minio/docker-compose.yaml minio
