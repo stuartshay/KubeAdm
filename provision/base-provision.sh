@@ -18,6 +18,7 @@ EOF
 
 # apt-cacher-ng
 #echo Acquire::http::Proxy \"http://192.168.33.10:3142\"\; | sudo tee /etc/apt/apt.conf.d/00proxy
+export DEBIAN_FRONTEND=noninteractive
 
 # Update apt source
 sudo -s -- <<EOF
@@ -29,13 +30,13 @@ EOF
 sudo apt-get install -y apt-transport-https ca-certificates curl
 
 # Install NFS Client
-sudo apt install nfs-common
+sudo apt-get install nfs-common
 
 # Python 3 Default
 sudo update-alternatives --install /usr/bin/python python /usr/bin/python3 10
 
 # install Python/pip
-sudo apt -y install python3-pip
+sudo apt-get -y install python3-pip
 echo "alias python='python3'" >> /home/vagrant/.bashrc
 echo "alias pip='pip3'" >> /home/vagrant/.bashrc
 source ~/.bashrc

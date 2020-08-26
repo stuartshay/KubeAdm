@@ -1,5 +1,6 @@
+export DEBIAN_FRONTEND=noninteractive
 echo "[TASK 1] Download and install NFS server"
-sudo apt install nfs-kernel-server
+sudo apt-get install nfs-kernel-server
 
 echo "[TASK 2] Create a kubedata directory"
 
