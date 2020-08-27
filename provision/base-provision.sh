@@ -19,24 +19,24 @@ EOF
 # apt-cacher-ng
 #echo Acquire::http::Proxy \"http://192.168.33.10:3142\"\; | sudo tee /etc/apt/apt.conf.d/00proxy
 export DEBIAN_FRONTEND=noninteractive
-
+sudo dpkg-reconfigure debconf -f noninteractive -p critical
 # Update apt source
 sudo -s -- <<EOF
-apt-get update 
-sudo DEBIAN_FRONTEND=noninteractive apt-get upgrade -y 
+sudo DEBIAN_FRONTEND=noninteractive apt-get update  2> /dev/null 
+sudo DEBIAN_FRONTEND=noninteractive apt-get upgrade -y  2> /dev/null 
 EOF
 
 # Install Dependencies
-sudo apt-get install -y apt-transport-https ca-certificates curl
+sudo apt-get install -y apt-transport-https ca-certificates curl 2> /dev/null 
 
 # Install NFS Client
-sudo apt-get install nfs-common
+sudo apt-get install nfs-common 2> /dev/null 
 
 # Python 3 Default
-sudo update-alternatives --install /usr/bin/python python /usr/bin/python3 10
+sudo update-alternatives --install /usr/bin/python python /usr/bin/python3 10 2> /dev/null 
 
 # install Python/pip
-sudo apt-get -y install python3-pip
+sudo apt-get -y install python3-pip 2> /dev/null 
 echo "alias python='python3'" >> /home/vagrant/.bashrc
 echo "alias pip='pip3'" >> /home/vagrant/.bashrc
 source ~/.bashrc
