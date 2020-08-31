@@ -495,7 +495,24 @@ ingress_rules:
   dashboard:
     host: ingress-internal-8443
     serviceName: kubernetes-dashboard
-    servicePort: 8443
+    servicePort: 443
+
+  ingress_internal_80:
+    host: ingress-internal-8080
+    serviceName: my-internal-api
+    servicePort: 8080
+
+  ingress_internal_81:
+    host: ingress-internal-8081
+    serviceName: my-internal-api-1
+    servicePort: 8081
+
+
+  ingress_internal_82:
+    host: ingress-internal-8082
+    serviceName: my-internal-api-2
+    servicePort: 8082
+
 ## Default 404 backend
 ##
 defaultBackend:
