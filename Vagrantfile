@@ -10,7 +10,7 @@ Vagrant.configure("2") do |config|
 
     config.vm.provider "virtualbox" do |v|
       #Global settings for each virtual machine
-      v.memory = 1500
+      v.memory = 2048
       v.cpus = 2
       #v.gui = true
     end
@@ -22,7 +22,7 @@ Vagrant.configure("2") do |config|
         master.vm.hostname = "k8s-master"
 
         master.vm.provider "virtualbox" do |vmvm|
-          vmvm.memory = 1500
+          vmvm.memory = 2048
         end
 
         master.vm.provision "shell", path: "provision/base-provision.sh", privileged: true
