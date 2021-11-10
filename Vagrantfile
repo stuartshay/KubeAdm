@@ -1,7 +1,7 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-IMAGE_NAME = "bento/ubuntu-18.04"
+IMAGE_NAME = "bento/ubuntu-20.04"
 N = 1
 
 
@@ -10,7 +10,7 @@ Vagrant.configure("2") do |config|
 
     config.vm.provider "virtualbox" do |v|
       #Global settings for each virtual machine
-      v.memory = 2048
+      v.memory = 4096
       v.cpus = 2
       #v.gui = true
     end
@@ -22,7 +22,7 @@ Vagrant.configure("2") do |config|
         master.vm.hostname = "k8s-master"
 
         master.vm.provider "virtualbox" do |vmvm|
-          vmvm.memory = 2048
+          vmvm.memory = 4096
         end
 
         master.vm.provision "shell", path: "provision/base-provision.sh", privileged: true
