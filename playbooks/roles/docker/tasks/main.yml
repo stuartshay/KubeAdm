@@ -36,6 +36,21 @@
           - containerd.io
         notify:
             - docker status
+    
+    - name: Set cgroup to systemd for docker
+      lineinfile:
+        path: /etc/docker/daemon.json
+        create: yes
+        line: '{"exec-opts": ["native.cgroupdriver=systemd"]}'
+        owner: root
+        group: root
+        mode: '0644'
+ 
+    - name: Restart docker
+      service:
+        name: docker
+        daemon_reload: yes
+        state: restarted
 
     - name: Add vagrant user to docker group
       user:
